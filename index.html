@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="th" data-mode="auto">
+<head>
+  <base target="_top">
+  <title>Ven. Ponnyar Nonda</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&family=Kanit:wght@400;600&family=Prompt:wght@400;600&family=Noto+Sans+Thai:wght@400;600;700&family=IBM+Plex+Sans+Thai:wght@400;600&family=Noto+Sans+Myanmar:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --accent:#c8952f;
+      --ink:#221a10; --muted:#6b6152; --line:#e8e0d2;
+      --bg:#faf7f1; --card:#ffffff;
+      --radius:14px;
+      --font:'Sarabun','Noto Sans Thai','Noto Sans Myanmar','Segoe UI',Tahoma,sans-serif;
+      --cover-h:220px; --cover-op:.55;
+      --shadow:0 1px 2px rgba(34,26,16,.06), 0 8px 24px rgba(34,26,16,.06);
+    }
+    :root[data-mode="dark"]{
+      --ink:#f2ece1; --muted:#a99f8f; --line:#332c22;
+      --bg:#15120d; --card:#1d1811;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+    }
+    @media (prefers-color-scheme: dark){
+      :root[data-mode="auto"]{
+        --ink:#f2ece1; --muted:#a99f8f; --line:#332c22;
+        --bg:#15120d; --card:#1d1811;
+        --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+      }
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{background:var(--bg); color:var(--ink); font-family:var(--font); line-height:1.65; -webkit-font-smoothing:antialiased}
+    html[lang="mnw"] body{line-height:1.95}
+    a{color:inherit}
+    img{max-width:100%; display:block}
+    .wrap{max-width:1040px; margin:0 auto; padding:0 16px 80px}
+
+    /* ---------- header ---------- */
+    .cover{position:relative; height:var(--cover-h); overflow:hidden; background:#2b2318}
+    .cover img{width:100%; height:100%; object-fit:cover; opacity:var(--cover-op)}
+    .cover::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,.15),var(--bg) 96%)}
+    .topbar{position:absolute; top:14px; right:14px; z-index:3; display:flex; gap:8px; align-items:center}
+    .langbar{display:flex; gap:6px; background:rgba(0,0,0,.35); padding:4px; border-radius:999px; backdrop-filter:blur(6px)}
+    .langbar button{border:0; cursor:pointer; padding:6px 14px; border-radius:999px; font:inherit; font-size:13px; font-weight:600; color:#fff; background:transparent}
+    .langbar button.on{background:var(--accent); color:#231a0c}
+    .lockbtn{border:0; cursor:pointer; width:36px; height:36px; border-radius:50%; background:rgba(0,0,0,.35); color:#fff; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(6px)}
+    .lockbtn svg{width:17px;height:17px;stroke:currentColor}
+    .lockbtn.on{background:var(--accent); color:#231a0c}
+
+    .head{position:relative; margin-top:-84px; z-index:2; text-align:center}
+    .avatar{width:150px;height:150px;border-radius:50%;margin:0 auto;object-fit:cover;border:5px solid var(--card); box-shadow:var(--shadow); background:var(--card)}
+    h1{font-size:30px; margin:16px 0 4px; letter-spacing:.2px}
+    .subname{color:var(--muted); font-size:15px; margin:0 0 10px}
+    .position{max-width:720px; margin:0 auto; color:var(--muted); font-size:15px}
+    .origin{max-width:720px; margin:8px auto 0; color:var(--muted); font-size:14px; font-style:italic}
+    .badges{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:18px 0 6px}
+    .badge{display:inline-flex; align-items:center; gap:7px; border:1px solid var(--line); background:var(--card); color:var(--ink); padding:7px 14px; border-radius:999px; font-size:13px; font-weight:600; box-shadow:var(--shadow)}
+    .badge svg{width:15px;height:15px;stroke:var(--accent)}
+
+    /* ---------- tabs & cards ---------- */
+    .tabs{display:flex; gap:4px; overflow-x:auto; margin:26px 0 20px; padding:5px; border:1px solid var(--line); background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow)}
+    .tabs button{flex:1 0 auto; border:0; background:transparent; cursor:pointer; font:inherit; font-size:14px; font-weight:600; color:var(--muted); padding:10px 16px; border-radius:10px; white-space:nowrap}
+    .tabs button.on{background:var(--accent); color:#231a0c}
+    .grid{display:grid; gap:14px}
+    .grid.two{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+    .grid.three{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow)}
+    .card h3{margin:0 0 6px; font-size:16px; line-height:1.5}
+    .card p{margin:0; color:var(--muted); font-size:14px}
+    .card .sub{margin:0 0 8px; font-size:14px; color:var(--ink); opacity:.85}
+    .chip{display:inline-block; font-size:12px; font-weight:700; padding:3px 10px; border-radius:999px; background:rgba(200,149,47,.16); background:color-mix(in srgb, var(--accent) 16%, transparent); color:var(--accent); margin-bottom:8px}
+    .sectitle{font-size:13px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin:26px 0 12px}
+    .paper{display:flex; flex-direction:column; overflow:hidden; padding:0}
+    .paper .thumb{height:150px; background:var(--line); overflow:hidden}
+    .paper .thumb img{width:100%;height:100%;object-fit:cover}
+    .paper .body{padding:16px}
+    .paper .link{display:inline-block; margin-top:10px; font-size:13px; font-weight:700; color:var(--accent); text-decoration:none}
+    table{width:100%; border-collapse:collapse; font-size:14px}
+    th,td{text-align:left; padding:11px 12px; border-bottom:1px solid var(--line); vertical-align:top}
+    th{font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+    tbody tr:last-child td{border-bottom:0}
+    .tablewrap{overflow-x:auto; background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow)}
+    td.date{white-space:nowrap; color:var(--muted)}
+    .tag{display:inline-block; font-size:12px; font-weight:700; padding:2px 9px; border-radius:999px; background:rgba(200,149,47,.16); background:color-mix(in srgb, var(--accent) 16%, transparent); color:var(--accent); white-space:nowrap}
+    .contact{display:grid; gap:10px; font-size:14px}
+    .contact div{display:flex; gap:10px; align-items:flex-start}
+    .contact svg{width:17px;height:17px;stroke:var(--accent); flex:0 0 auto; margin-top:4px}
+    .exp .ic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center; background:rgba(200,149,47,.16); background:color-mix(in srgb, var(--accent) 16%, transparent); margin-bottom:10px}
+    .exp .ic svg{width:19px;height:19px;stroke:var(--accent)}
+    footer{text-align:center; color:var(--muted); font-size:13px; margin-top:34px}
+    .hide{display:none !important}
+
+    /* ---------- modal / editor ---------- */
+    .mask{position:fixed; inset:0; background:rgba(15,11,5,.55); backdrop-filter:blur(3px); z-index:50; display:flex; align-items:center; justify-content:center; padding:16px}
+    .modal{background:var(--card); color:var(--ink); border-radius:16px; padding:24px; width:100%; max-width:360px; box-shadow:0 20px 60px rgba(0,0,0,.35)}
+    .modal h2{margin:0 0 6px; font-size:19px}
+    .modal p.hint{margin:0 0 16px; color:var(--muted); font-size:13px}
+    .err{color:#c0392b; font-size:13px; margin:10px 0 0; min-height:18px}
+    .btn{border:0; cursor:pointer; font:inherit; font-weight:700; font-size:14px; padding:10px 18px; border-radius:10px; background:var(--accent); color:#231a0c}
+    .btn.ghost{background:transparent; border:1px solid var(--line); color:var(--ink)}
+    .btn.danger{background:#c0392b; color:#fff}
+    .btn:disabled{opacity:.5; cursor:not-allowed}
+    .row{display:flex; gap:8px; align-items:center; flex-wrap:wrap}
+    .row.end{justify-content:flex-end}
+
+    input[type=text],input[type=password],input[type=number],textarea,select{
+      width:100%; font:inherit; font-size:14px; padding:9px 12px; border-radius:9px;
+      border:1px solid var(--line); background:var(--bg); color:var(--ink);
+    }
+    input[type=password].code{text-align:center; letter-spacing:.5em; font-size:20px; font-weight:700}
+    textarea{resize:vertical; min-height:70px; line-height:1.6}
+    input[type=color]{width:44px; height:36px; padding:2px; border:1px solid var(--line); border-radius:8px; background:var(--bg); cursor:pointer}
+    label.fl{display:block; font-size:12px; font-weight:700; color:var(--muted); margin:0 0 5px; letter-spacing:.02em}
+
+    .editor{position:fixed; inset:0; z-index:60; background:var(--bg); display:flex; flex-direction:column}
+    .ed-top{display:flex; align-items:center; gap:10px; padding:12px 16px; border-bottom:1px solid var(--line); background:var(--card); flex:0 0 auto}
+    .ed-top strong{font-size:15px; margin-right:auto}
+    .ed-body{flex:1 1 auto; display:flex; min-height:0}
+    .ed-nav{flex:0 0 210px; border-right:1px solid var(--line); overflow-y:auto; padding:12px; background:var(--card)}
+    .ed-nav button{display:block; width:100%; text-align:left; border:0; background:transparent; font:inherit; font-size:14px; color:var(--muted); padding:9px 12px; border-radius:9px; cursor:pointer}
+    .ed-nav button.on{background:rgba(200,149,47,.18); background:color-mix(in srgb, var(--accent) 18%, transparent); color:var(--ink); font-weight:700}
+    .ed-main{flex:1 1 auto; overflow-y:auto; padding:20px; max-width:1080px}
+    .ed-main h2{margin:0 0 4px; font-size:20px}
+    .ed-main .desc{margin:0 0 18px; color:var(--muted); font-size:13px}
+    .fld{margin-bottom:14px}
+    .fld.tri{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px}
+    .lg{display:block; font-size:11px; color:var(--muted); margin:0 0 3px}
+    .item{border:1px solid var(--line); border-radius:12px; padding:14px; margin-bottom:12px; background:var(--card)}
+    .item-head{display:flex; align-items:center; gap:6px; margin-bottom:10px}
+    .item-head span{font-weight:700; font-size:13px; color:var(--muted); margin-right:auto; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+    .ib{border:1px solid var(--line); background:var(--bg); color:var(--muted); cursor:pointer; width:28px; height:28px; border-radius:7px; font-size:13px; line-height:1; padding:0}
+    .ib:hover{color:var(--ink)}
+    .ib.del:hover{color:#c0392b; border-color:#c0392b}
+    .thumbrow{display:flex; gap:10px; align-items:center; margin-top:8px}
+    .thumbrow img{width:64px; height:64px; object-fit:cover; border-radius:8px; border:1px solid var(--line); background:var(--bg)}
+    .peekbar{position:fixed; left:50%; bottom:20px; transform:translateX(-50%); z-index:55; box-shadow:0 10px 30px rgba(0,0,0,.3); white-space:nowrap}
+    .toast{position:fixed; left:50%; bottom:24px; transform:translateX(-50%); background:#1d1811; color:#fff; padding:11px 20px; border-radius:10px; font-size:14px; z-index:90; box-shadow:0 10px 30px rgba(0,0,0,.3)}
+    .toast.err{background:#c0392b}
+    .note{background:rgba(200,149,47,.10); background:color-mix(in srgb, var(--accent) 10%, transparent); border:1px solid rgba(200,149,47,.3); border-color:color-mix(in srgb, var(--accent) 30%, transparent); border-radius:10px; padding:12px 14px; font-size:13px; color:var(--ink); margin-bottom:16px}
+    @media(max-width:760px){
+      .ed-top{flex-wrap:wrap}
+      .ed-top #dirtyFlag{order:9; flex:1 0 100%}
+      .ed-body{flex-direction:column}
+      .ed-nav{flex:0 0 auto; border-right:0; border-bottom:1px solid var(--line); display:flex; gap:6px; overflow-x:auto; padding:8px}
+      .ed-nav button{width:auto; white-space:nowrap; padding:8px 12px}
+      .fld.tri{grid-template-columns:1fr}
+    }
+    @media(max-width:520px){
+      h1{font-size:24px}
+      .avatar{width:122px;height:122px}
+      .head{margin-top:-70px}
+    }
+    #lockbtn,#loginMask,#editor,#peekBar{display:none !important}
+  </style>
+</head>
+<body>
+
+<div class="cover">
+  <img id="cover" alt="">
+  <div class="topbar">
+    <div class="langbar">
+      <button id="btn-th" onclick="setLang('th')">ไทย</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+      <button id="btn-mon" onclick="setLang('mon')">မန်</button>
+    </div>
+    <button class="lockbtn" id="lockbtn" onclick="lockClick()" title="แก้ไขข้อมูล"></button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="head">
+    <img class="avatar" id="avatar" alt="">
+    <h1 id="name"></h1>
+    <p class="subname" id="subname"></p>
+    <p class="position" id="position"></p>
+    <p class="origin" id="origin"></p>
+    <div class="badges" id="badges"></div>
+  </div>
+
+  <div class="tabs" id="tabs"></div>
+  <div id="panel-about"></div>
+  <div id="panel-work" class="hide"></div>
+  <div id="panel-papers" class="hide"></div>
+  <div id="panel-speeches" class="hide"></div>
+  <footer id="footer"></footer>
+</div>
+
+<!-- กล่องใส่รหัส -->
+<div class="mask hide" id="loginMask">
+  <div class="modal">
+    <h2>เข้าสู่โหมดแก้ไข</h2>
+    <p class="hint">กรอกรหัสผ่านเพื่อแก้ไขข้อความ รูปภาพ และธีมสี</p>
+    <input type="password" class="code" id="codeInput" inputmode="numeric" autocomplete="off"
+           maxlength="24" placeholder="••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    <p class="err" id="loginErr"></p>
+    <div class="row end" style="margin-top:8px">
+      <button class="btn ghost" onclick="closeLogin()">ยกเลิก</button>
+      <button class="btn" id="loginBtn" onclick="doLogin()">เข้าสู่ระบบ</button>
+    </div>
+  </div>
+</div>
+
+<!-- หน้าจอแก้ไข -->
+<div class="editor hide" id="editor">
+  <div class="ed-top">
+    <strong>โหมดแก้ไข</strong>
+    <span id="dirtyFlag" style="color:var(--muted); font-size:13px"></span>
+    <button class="btn ghost" onclick="closeEditor()">ปิด</button>
+    <button class="btn ghost" onclick="peekPage()">ดูตัวอย่าง</button>
+    <button class="btn" id="saveBtn" onclick="saveAll()">บันทึก</button>
+  </div>
+  <div class="ed-body">
+    <div class="ed-nav" id="edNav"></div>
+    <div class="ed-main" id="edMain"></div>
+  </div>
+</div>
+<button class="btn peekbar hide" id="peekBar" onclick="backToEditor()">← กลับไปแก้ไข</button>
+
+<script>
+var DEFAULT_THEME = {
+  mode: 'auto',          // auto | light | dark
+  accent: '#c8952f',     // สีหลัก (ทอง)
+  useCustom: false,      // true = ใช้สีพื้นหลัง/ตัวอักษรที่กำหนดเอง
+  bg: '#faf7f1',
+  card: '#ffffff',
+  ink: '#221a10',
+  muted: '#6b6152',
+  line: '#e8e0d2',
+  font: 'Sarabun',
+  radius: 14,
+  coverHeight: 220,
+  coverOpacity: 0.55
+};
+
+var DEFAULT_PROFILE = {
+  "name": {
+    "th": "พระปัญญานันทะ",
+    "en": "Ven. Ponnyar Nonda"
+  },
+  "nameEn": "Ven. Ponnyar Nonda",
+  "photo": "",
+  "cover": "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=1600&q=80",
+  "origin": {
+    "th": "ชาติภูมิ: พระภิกษุชาวมอญ (รามัญ) รัฐตะนาวศรี (Tanintharyi) สาธารณรัฐแห่งสหภาพเมียนมา",
+    "en": "Origin: Mon (Rāmañña) Buddhist Monk, Tanintharyi Region, Republic of the Union of Myanmar"
+  },
+  "position": {
+    "th": "นักวิเทศสัมพันธ์ หลักสูตรบัณฑิตศึกษา สาขาวิชาพุทธจิตวิทยา คณะมนุษยศาสตร์ มหาวิทยาลัยมหาจุฬาลงกรณราชวิทยาลัย (มจร.)",
+    "en": "International Relations Officer, Graduate Program in Buddhist Psychology, Faculty of Humanities, Mahachulalongkornrajavidyalaya University (MCU)"
+  },
+  "badges": [
+    { "icon": "dharmachakra", "text": { "th": "๑๔ พรรษา", "en": "14 Vassa" } },
+    { "icon": "scroll", "text": { "th": "สาสนธชธัมมาจริยะ (เทียบเท่า ป.ธ.๙)", "en": "Sāsanadhaja Dhammācariya" } },
+    { "icon": "bot", "text": { "th": "พระนักวิชาการ AI & พุทธจิตวิทยา", "en": "Buddhism & AI Researcher" } }
+  ],
+  "contact": {
+    "institution": {
+      "th": "มหาวิทยาลัยมหาจุฬาลงกรณราชวิทยาลัย (มจร. อ.วังน้อย จ.พระนครศรีอยุธยา)",
+      "en": "Mahachulalongkornrajavidyalaya University (Wang Noi, Phra Nakhon Si Ayutthaya)"
+    },
+    "email": "ponnyarnon@gmail.com",
+    "website": "https://www.mcu.ac.th",
+    "websiteLabel": "www.mcu.ac.th"
+  },
+  "education": [
+    {
+      "status": { "th": "กำลังศึกษา", "en": "Currently Studying" },
+      "title": {
+        "th": "ปริญญาเอก: พุทธศาสตรดุษฎีบัณฑิต (สาขาวิชาพุทธจิตวิทยา)",
+        "en": "Ph.D.: Doctor of Buddhist Studies (Buddhist Psychology)"
+      },
+      "sub": {
+        "th": "หลักสูตรบัณฑิตศึกษา รุ่นที่ ๑๓ | มหาวิทยาลัยมหาจุฬาลงกรณราชวิทยาลัย (มจร.)",
+        "en": "Graduate Program, Batch 13 | Mahachulalongkornrajavidyalaya University (MCU)"
+      }
+    },
+    {
+      "status": { "th": "สำเร็จการศึกษา", "en": "Graduated" },
+      "title": {
+        "th": "ปริญญาโท: พุทธศาสตรมหาบัณฑิต (สาขาวิชาพุทธจิตวิทยา)",
+        "en": "M.A.: Master of Buddhist Studies (Buddhist Psychology)"
+      },
+      "sub": {
+        "th": "มหาวิทยาลัยมหาจุฬาลงกรณราชวิทยาลัย (มจร.)",
+        "en": "Mahachulalongkornrajavidyalaya University (MCU)"
+      }
+    },
+    {
+      "status": { "th": "เปรียญธรรมชั้นสูงสุด", "en": "Highest Pali Degree" },
+      "title": {
+        "th": "บาลีศึกษา: สาสนธชธัมมาจริยะ (Sāsanadhaja Dhammācariya)",
+        "en": "Pali Studies: Sāsanadhaja Dhammācariya"
+      },
+      "sub": {
+        "th": "คุณวุฒิบาลีธัมมาจริยะชั้นสูงสุดของประเทศเมียนมา (เทียบเคียงระดับ ป.ธ.๙ ของคณะสงฆ์ไทย)",
+        "en": "The highest Pali Dhammācariya qualification of Myanmar (equivalent to Parian Dhamma 9)"
+      }
+    }
+  ],
+  "experience": [
+    {
+      "title": { "th": "นักวิเทศสัมพันธ์", "en": "International Relations Officer" },
+      "sub": {
+        "th": "หลักสูตรบัณฑิตศึกษา สาขาวิชาพุทธจิตวิทยา คณะมนุษยศาสตร์ มจร.",
+        "en": "Graduate Program in Buddhist Psychology, Faculty of Humanities, MCU"
+      },
+      "desc": {
+        "th": "ประสานงานกับนักศึกษาต่างชาติและหน่วยงานต่างประเทศ ดูแลนักศึกษาระดับบัณฑิตศึกษา และงานธุรการด้านวิเทศสัมพันธ์",
+        "en": "Coordinating with international students and foreign institutions, supporting graduate students and international affairs administration"
+      }
+    },
+    {
+      "title": { "th": "อาจารย์ผู้ช่วยสอน", "en": "Teaching Assistant" },
+      "sub": {
+        "th": "รายวิชาพุทธธรรมศึกษาและการพัฒนาศักยภาพมนุษย์",
+        "en": "Buddhist Dhamma Studies & Human Potential Development"
+      },
+      "desc": {
+        "th": "สนับสนุนอาจารย์ประจำวิชาในการจัดกิจกรรมการเรียนรู้ และดูแลงานประเมินผลการศึกษา",
+        "en": "Assisting faculty members in instructional activities, curriculum engagement and evaluation."
+      }
+    },
+    {
+      "title": { "th": "อาจารย์ผู้สอน", "en": "Lecturer" },
+      "sub": {
+        "th": "รายวิชาปรัชญาธรรมและศิลปวัฒนธรรมมอญ",
+        "en": "Dhamma Philosophy & Mon Arts and Culture"
+      },
+      "desc": {
+        "th": "บรรยายและถ่ายทอดความรู้ด้านพุทธปรัชญา ประวัติศาสตร์ และศิลปวัฒนธรรมรามัญ",
+        "en": "Teaching courses in Buddhist philosophy, Mon history, and traditional arts and culture."
+      }
+    }
+  ],
+  "papers": [
+    {
+      "title": "Evaluation of an Artificial Intelligence Ethics Instrument for Academic Use Through an Off-Campus Field Trip Activity for Undergraduate Students",
+      "authors": "Ponnyar Nonda, Thanasak Pontappasarn, Jaksathapanith Boonyarith",
+      "note": { "th": "บทความสำหรับการประชุม The 4th ICSD&NS 2026 (๕ พ.ย. ๒๕๖๙) ณ มหาวิทยาลัยแห่งชาติลาว", "en": "Paper for The 4th ICSD&NS 2026 (5 Nov 2026), National University of Laos" },
+      "url": "",
+      "image": ""
+    },
+    {
+      "title": "The Process of Accepting Disappointment According to Buddhist Psychology: A Case Study Analysis of Yasodharā After the Night Prince Siddhattha Left",
+      "authors": "Kulthida Phithakwongwatthana, Ponnyar Nonda",
+      "note": { "th": "บทความสำหรับการประชุม The 4th ICSD&NS 2026 (๕ พ.ย. ๒๕๖๙) ณ มหาวิทยาลัยแห่งชาติลาว", "en": "Paper for The 4th ICSD&NS 2026 (5 Nov 2026), National University of Laos" },
+      "url": "",
+      "image": ""
+    },
+    {
+      "title": "Teachers as Good Friends: A Buddhist Psychological Approach to Children's Emotional Resilience",
+      "authors": "Jenjira Koollawong, Ponnyar Nonda",
+      "note": { "th": "บทความสำหรับการประชุม The 4th ICSD&NS 2026 (๕ พ.ย. ๒๕๖๙) ณ มหาวิทยาลัยแห่งชาติลาว", "en": "Paper for The 4th ICSD&NS 2026 (5 Nov 2026), National University of Laos" },
+      "url": "",
+      "image": ""
+    },
+    {
+      "title": "Integrating Buddhist Psychology into Student Counselling: A Literature Review on Resilience Building in Southeast Asian Higher Education",
+      "authors": "Jittakorn Inseachiangmai, Suwatsan Rakkhantho, Ponnyar Nonda, Souphaphak Chittaboupha, Bounleth Thongasa",
+      "note": { "th": "บทความสำหรับการประชุม The 4th ICSD&NS 2026 (๕ พ.ย. ๒๕๖๙) ณ มหาวิทยาลัยแห่งชาติลาว", "en": "Paper for The 4th ICSD&NS 2026 (5 Nov 2026), National University of Laos" },
+      "url": "",
+      "image": ""
+    },
+    {
+      "title": { "th": "กฎหมายและกระบวนการยุติธรรมของคณะสงฆ์เมียนมา: จากการสอบสวนสู่การรับโทษ ข้อยกเว้น และสิทธิพิเศษ", "en": "Law and Judicial Process of the Myanmar Sangha: From Investigation to Punishment, Exceptions, and Privileges" },
+      "authors": "พระปัญญานันทะ (Ven. Ponnyar Nonda), พระครูสังฆวิริยกิจ (ระพิน พุทฺธิสาโร)",
+      "note": { "th": "สถานะ: ต้นฉบับบทความ พ.ศ. ๒๕๖๙", "en": "Status: Manuscript, 2026" },
+      "url": "",
+      "image": ""
+    },
+    {
+      "title": { "th": "การเจริญภาวนาตามบุคลิกภาพ: แนวทางการเลือกกัมมัฏฐานด้วยหลักเอ็มบีทีไอ", "en": "Meditation According to Personality: A Guide to Selecting Kammaṭṭhāna through the MBTI Framework" },
+      "authors": { "th": "กุลธิดา พิทักษ์วงษ์วัฒนะ, พระปัญญานันทะ, วิชชุดา ฐิติโชติรัตนา", "en": "Kulthida Phithakwongwatthana, Ven. Ponnyar Nonda, Witchuda Titichoatrattana" },
+      "note": { "th": "สถานะ: ต้นฉบับบทความ พ.ศ. ๒๕๖๙", "en": "Status: Manuscript, 2026" },
+      "url": "",
+      "image": ""
+    },
+    {
+      "title": "The Application of Buddhist Psychology to Enhance an Effective Work Environment",
+      "authors": "Thanasak Pontappasarn, Thanad Chaiyaphan, Ponnya Nonda",
+      "url": "https://so15.tci-thaijo.org",
+      "image": ""
+    },
+    {
+      "title": "แนวคิดเชิงพุทธจิตวิทยาเพื่อเสริมสร้างสมรรถนะของพยาบาลในการปรึกษา",
+      "authors": "อัจชาวรรณ แก่นอินทร์, พระปัญญานันทะ, วิชชุดา ฐิติโชติรัตนา",
+      "url": "https://so03.tci-thaijo.org",
+      "image": ""
+    },
+    {
+      "title": "AI Usage in Daily Life of Thais Across Age Groups: Social Evolution and Development in the Digital Era",
+      "authors": "Ven. Ponnyar Nonda, Acting Sub Lt. Warinthon Koedphom",
+      "url": "",
+      "image": ""
+    },
+    {
+      "title": "Enhancing Self-Esteem of Visually Impaired Individuals through Psychological Empowerment Process Based on Buddhist Psychology",
+      "authors": "Charada Thaisanguanworakul, Ven. Ponnyar Nonda",
+      "url": "",
+      "image": ""
+    },
+    {
+      "title": "Developing the Holistic Quality of Life among the Elderly Based on Buddhist Psychology",
+      "authors": "Phramaha Suthep Sutdhiyano, Suwatsan Ragkhanto, Witchuda Titichoatrattana, Thanad Chaiyaphan, Ven. Ponnyar Nonda, Kanokwan Boonkane",
+      "url": "",
+      "image": ""
+    },
+    {
+      "title": "Mechanisms to Drive the Development of Resilience to Enhance Life Skills Based on Buddhist Psychology for Youth",
+      "authors": "Siriwat Srikhruedong, Man Suesungneon, Ponnyar Nonda, Tiptida Na Nakorn, Apisada Srikhruedong",
+      "url": "",
+      "image": ""
+    },
+    {
+      "title": "Applied Psychology for Human Potential Development in Family Roles: A Case Study of the Buddha's Teaching Methods for Venerable Rāhula",
+      "authors": "Man Suesungnoen, Ponnyar Nonda, Siriwat Srikhruedong, Apisada Srikhruedong",
+      "url": "",
+      "image": ""
+    },
+    {
+      "title": "แรงจูงใจในการพัฒนาคุณภาพชีวิตตามแนวพุทธจิตวิทยาของชนชาติมอญผู้มาทำงานในประเทศไทย",
+      "authors": "พระปัญญานันทะ (Ven. Ponnyar Nonda)",
+      "url": ""
+    },
+    {
+      "title": "การฝึกสัมมาสติและสมาธิเพื่อพัฒนาตนในสังคมดิจิทัลที่ไม่หยุดนิ่ง",
+      "authors": "พระปัญญานันทะ (Ven. Ponnyar Nonda)",
+      "url": "",
+      "image": ""
+    },
+    {
+      "title": "Enhancing Leadership Qualities through Buddhist Principles: Integrating the Four Adhipati with Contemporary Leadership Concepts",
+      "authors": "Ven. Ponnyar Nonda",
+      "url": "",
+      "image": ""
+    },
+    {
+      "title": "ศรัทธาอย่างมีปัญญา: กรณีศึกษานางวิสาขามหาอุบาสิกา ในการทะนุบำรุงพระพุทธศาสนาด้วยหลักสัมมาสติ",
+      "authors": "พระปัญญานันทะ",
+      "url": "",
+      "image": ""
+    },
+    {
+      "title": "Enhancing Four English Skills for Pre-Intermediate Students in the Mon Buddhist Society at Mahachulalongkornrajavidyalaya University (Main Campus), Thailand",
+      "authors": "Ven. Ponnyar Nonda",
+      "url": "",
+      "image": ""
+    }
+  ],
+  "speeches": [
+    { "date": "๑๙ ก.พ. ๒๕๖๘", "topic": "รู้ทันจิต ชีวิตเป็นสุข", "venue": "เทศบาลเมืองบางกะดี จ.ปทุมธานี", "type": "บรรยายธรรม" },
+    { "date": "๒๐ ก.พ. ๒๕๖๘", "topic": "AI-SMART Report: นวัตกรรมการเขียนรายงานด้วย AI", "venue": "มทร.รัตนโกสินทร์ วิทยาเขตวังไกลกังวล", "type": "อบรม AI" },
+    { "date": "๒๖ เม.ย. ๒๕๖๘", "topic": "การประยุกต์ใช้ AI เพื่อพัฒนางานวิจัยและวิทยานิพนธ์ให้มีประสิทธิภาพ", "venue": "คณะนิเทศศาสตร์ ม.เกษมบัณฑิต (ป.โท)", "type": "อบรม AI" },
+    { "date": "๗ พ.ค. ๒๕๖๘", "topic": "หลักสูตร AI สำหรับครูยุคใหม่: การประยุกต์ใช้ปัญญาประดิษฐ์ในชั้นเรียน", "venue": "รร.มูลนิธิวัดปากบ่อ กรุงเทพฯ", "type": "อบรมครู" },
+    { "date": "๒๒ มิ.ย. ๒๕๖๘", "topic": "การผลิตสื่อการสอนด้วย AI สำหรับครูอนุบาลและประถมศึกษา", "venue": "รร.มูลนิธิวัดปากบ่อ", "type": "อบรมครู" },
+    { "date": "๒๖ มิ.ย. ๒๕๖๘", "topic": "ผู้นำเสนอผลงานวิชาการ (Presenter)", "venue": "3rd International Conference on Languages and Cultures", "type": "วิชาการ" },
+    { "date": "๒๗ มิ.ย. ๒๕๖๘", "topic": "ออกบูธ/รับเกียรติบัตรสนับสนุนงาน สถาบันภาษาวัฒนานุสรณ์ ๑๓ ปี", "venue": "อาคาร มวก.๔๘ พรรษา มจร.", "type": "นิทรรศการ" },
+    { "date": "๓ ส.ค. ๒๕๖๘", "topic": "ถอดรหัสข้อมูลสู่การสร้างองค์ความรู้ใหม่ (Research Journey EP2)", "venue": "หลักสูตรบัณฑิตศึกษา สาขาวิชาพุทธจิตวิทยา มจร.", "type": "สัมมนา" },
+    { "date": "๒๗ ส.ค. ๒๕๖๘", "topic": "เขียนบทความวิชาการ The Mon Tradition and Culture (รับเชิญโดยอธิการบดี)", "venue": "วารสาร Rāmaññaraṭṭha Buddhist University", "type": "รับเชิญ" },
+    { "date": "๑๐ ก.ย. ๒๕๖๘", "topic": "ประชุมกลุ่มเฉพาะ (Focus Group) การใช้ AI เพื่อการเผยแผ่พระพุทธศาสนาของพระธรรมทูต", "venue": "ศูนย์พระธรรมทูต มจร.", "type": "ผู้เชี่ยวชาญ" },
+    { "date": "๗ พ.ย. ๒๕๖๘", "topic": "ผู้นำเสนอผลงานวิชาการ (Presenter)", "venue": "3rd International Conference on Social Sciences ณ มหาวิทยาลัยแห่งชาติลาว", "type": "นานาชาติ" },
+    { "date": "๒๕๖๘", "topic": "AI กับงานวิจัย", "venue": "ม.เทคโนโลยีราชมงคลสุวรรณภูมิ", "type": "อบรม AI" },
+    { "date": "๒๕๖๘", "topic": "การประยุกต์ใช้ AI กับคัมภีร์ไบเบิล", "venue": "กลุ่มบาทหลวงภาคเหนือ จ.เชียงใหม่", "type": "เสวนา" },
+    { "date": "๒๕๖๘", "topic": "การใช้ AI สำหรับครู", "venue": "รร.พระวรสาร จ.ลพบุรี", "type": "อบรมครู" },
+    { "date": "๑๙–๒๐ ส.ค. ๒๕๖๙", "topic": "ผู้จัดทำคู่มือกิจกรรม “พุทธจิตวิทยาและการทำงานร่วมกันระหว่างมนุษย์กับ AI”", "venue": "โครงการเสริมหลักสูตรการเรียนรู้ในศตวรรษที่ ๒๑ ภาควิชาจิตวิทยา คณะมนุษยศาสตร์ มจร.", "type": "ออกแบบกิจกรรม" },
+    { "date": "๕ พ.ย. ๒๕๖๙", "topic": "ผู้นำเสนอผลงานวิชาการ (Presenter) ตามกำหนดการ: Evaluation of an AI Ethics Instrument for Academic Use", "venue": "The 4th ICSD&NS 2026 ณ มหาวิทยาลัยแห่งชาติลาว", "type": "นานาชาติ" }
+  ],
+  "expertise": [
+    {
+      "icon": "bot",
+      "title": "AI for Academic Research",
+      "desc": {
+        "th": "การประยุกต์ใช้ AI ในการสังเคราะห์เอกสารวิชาการ การทำวิจัยพุทธศาสน์ และนวัตกรรม AI-SMART Report",
+        "en": "Applying AI to academic synthesis, Buddhist research and the AI-SMART Report innovation"
+      }
+    },
+    {
+      "icon": "brain",
+      "title": "Buddhist Psychology",
+      "desc": {
+        "th": "การใช้หลักพุทธจิตวิทยาเพื่อพัฒนาคุณภาพชีวิต การสร้าง Resilience และการเสริมสร้างสมรรถนะการทำงาน",
+        "en": "Buddhist psychology for quality of life, resilience building and work competency"
+      }
+    },
+    {
+      "icon": "languages",
+      "title": "Mon Culture & Pali Studies",
+      "desc": {
+        "th": "การถ่ายทอดปรัชญาธรรมและศิลปวัฒนธรรมมอญ ภาษาศาสตร์บาลีชั้นสูง (สาสนธชธัมมาจริยะ)",
+        "en": "Mon philosophy and culture, advanced Pali linguistics (Sāsanadhaja Dhammācariya)"
+      }
+    }
+  ],
+  "otherWorks": [
+    {
+      "title": { "th": "โครงการวิจัย: การพัฒนารูปแบบพุทธจิตวิทยาเพื่อส่งเสริมการรู้เท่าทันดิจิทัลของนิสิต มจร.", "en": "Research Project: Development of a Buddhist Psychological Model for Enhancing Digital Literacy among Undergraduate Students, MCU" },
+      "desc": { "th": "คณะผู้วิจัย: ดร.ธนศักดิ์ พรทัพพสาร, Ponnyar Nonda, กิตติภัค สุดสะกรี · ทุนอุดหนุนการวิจัยจาก มจร. · รายงานความก้าวหน้า พ.ศ. ๒๕๖๙", "en": "Researchers: Thanasak Pontappasarn, Ponnyar Nonda, กิตติภัค สุดสะกรี · Funded by MCU · Progress report, 2026" }
+    },
+    {
+      "title": { "th": "เครื่องมือตรวจสอบและรับรองจริยธรรมการใช้ปัญญาประดิษฐ์ในงานวิจัย", "en": "AI Research-Use Ethics Declaration and Verification Instrument" },
+      "desc": { "th": "เว็บแอพบันทึกและรับรองการใช้ AI ในงานวิชาการ ทดลองใช้จริงกับนิสิตภาควิชาจิตวิทยา ๑๙–๒๐ ส.ค. ๒๕๖๙", "en": "A web application for recording and certifying AI use in academic work, field-tested with Department of Psychology students, 19–20 August 2026" }
+    },
+    {
+      "title": { "th": "ประกาศนียบัตร Claude 101", "en": "Certificate of Completion: Claude 101" },
+      "desc": { "th": "Anthropic · ๒๕๖๙", "en": "Anthropic · 2026" }
+    },
+    {
+      "title": { "th": "หนังสือ: เครื่องมือวิเคราะห์ข้อมูลเชิงคุณภาพ: การตีความพุทธจิตวิทยาด้วยอุปจาระ ๑๒ ประการ", "en": "" },
+      "desc": { "th": "โดย พระปัญญานันทะ · สถานะ: ต้นฉบับ พ.ศ. ๒๕๖๙", "en": "By Ven. Ponnyar Nonda · Status: Manuscript, 2026" }
+    },
+    {
+      "title": { "th": "บทที่ ๗ การฝึกจิตเพื่อความสุข ในหนังสือ พุทธจิตวิทยาเพื่อพัฒนาความสุข", "en": "" },
+      "desc": { "th": "ผู้เขียนประจำบท ตามโครงสร้างหนังสือ · สถานะ: อยู่ในโครงสร้างหนังสือ พ.ศ. ๒๕๖๙", "en": "Chapter author, per the book outline · Status: In book outline, 2026" }
+    },
+    {
+      "title": { "th": "แอพ Tipitaka Paḷi Ramonnya", "en": "Tipitaka Paḷi Ramonnya App" },
+      "desc": { "th": "พระไตรปิฎกบาลีอักษรรามัญ ฉบับฉัฏฐสังคายนา ๑๔๘ คัมภีร์ ๔๖,๙๑๕ หน้า · สถานะ: ใช้งานแบบออฟไลน์", "en": "The Chaṭṭha Saṅgāyana Pāli Tipiṭaka in Mon script, 148 texts, 46,915 pages · Status: Offline app" }
+    }
+  ]
+};
+
+/* ข้อความภาษามอญของเนื้อหาหลัก (ฉบับร่าง — แก้ได้ในหน้าจอแก้ไข)
+   ผลงานวิชาการและรายการบรรยายยังไม่ได้แปล จะแสดงข้อความเดิมจนกว่าจะกรอกช่องภาษามอญ */
+(function (p) {
+  var MCU  = 'တက္ကသဵုမဟာစုဠာလင်္ကရဏရာဇဝိဒျာလဲ (MCU)';
+  var PROG = 'ပြကိုဟ်ဗ္တောန်ပညာဇၞော် ဗုဒ္ဓစိတ္တဗေဒ';
+  var IRO  = 'ညးကၠောန်ကမၠောန်ဆက်စၠောအ်ဍုင်နာန';
+
+  p.name.mon     = 'တၠဂုဏ်အ္စာပညာနန္ဒ';
+  p.origin.mon   = 'ဌာနဒေသ: ဘိက္ခုဂကူမန် (ရာမည)၊ ဒေသ Tanintharyi၊ ဍုင်ဗၟာ (Republic of the Union of Myanmar)';
+  p.position.mon = IRO + '၊ ' + PROG + '၊ Faculty of Humanities၊ ' + MCU;
+
+  p.badges[0].text.mon = '၁၄ ဝါ';
+  p.badges[1].text.mon = 'သာသနဓဇဓမ္မာစရိယ';
+  p.badges[2].text.mon = 'အ္စာပညာ AI ကေုာံ ဗုဒ္ဓစိတ္တဗေဒ';
+
+  p.contact.institution.mon = 'တက္ကသဵုမဟာစုဠာလင်္ကရဏရာဇဝိဒျာလဲ (MCU, Wang Noi, Phra Nakhon Si Ayutthaya)';
+
+  p.education[0].status.mon = 'ဒၟံင်ဗ္တောန်ပညာ';
+  p.education[0].title.mon  = 'Ph.D.: ဗုဒ္ဓစိတ္တဗေဒ (Doctor of Buddhist Studies)';
+  p.education[0].sub.mon    = 'ပြကိုဟ်ဗ္တောန်ပညာဇၞော်၊ ဂကောံ ၁၃ | ' + MCU;
+  p.education[1].status.mon = 'ဗ္တောန်ပညာတုဲရ';
+  p.education[1].title.mon  = 'M.A.: ဗုဒ္ဓစိတ္တဗေဒ (Master of Buddhist Studies)';
+  p.education[1].sub.mon    = MCU;
+  p.education[2].status.mon = 'ပညာပါဠိဇၞော်အိုတ်';
+  p.education[2].title.mon  = 'ပညာပါဠိ: သာသနဓဇဓမ္မာစရိယ (Sāsanadhaja Dhammācariya)';
+  p.education[2].sub.mon    = 'ဓမ္မာစရိယပါဠိဇၞော်အိုတ် ပ္ဍဲဍုင်ဗၟာ (ညံင်ကဵု ป.ธ.๙ ဂကောံသင်္ဃသေံ)';
+
+  p.experience[0].title.mon = IRO;
+  p.experience[0].sub.mon   = PROG + '၊ Faculty of Humanities၊ MCU';
+  p.experience[0].desc.mon  = 'ဆက်စၠောအ် ကွးဘာဍုင်နာန ကီု ဌာနဍုင်နာန ကီု၊ ဂွိင်ကွးဘာပညာဇၞော် ကေုာံ ကမၠောန်ဆက်စၠောအ်ဍုင်နာနရ။';
+  p.experience[1].title.mon = 'အ္စာဘာမကေင်ကာ';
+  p.experience[1].sub.mon   = 'ဘာသာ ဗုဒ္ဓဓမ္မ ကေုာံ ပွမဇၞော်မောဝ်ပတိုန်ပညာမၞိဟ်';
+  p.experience[1].desc.mon  = 'ကေင်ကာအ္စာဘာ ပ္ဍဲကမၠောန်ဗ္တောန်ပညာ၊ ပြကိုဟ် ကေုာံ ပွမစမ်ၜတ်ရ။';
+  p.experience[2].title.mon = 'အ္စာဘာ';
+  p.experience[2].sub.mon   = 'ဘာသာ ဒဿနဓမ္မ ကေုာံ ယေန်သၞာင်မန်';
+  p.experience[2].desc.mon  = 'ဗ္တောန်ပညာ ဒဿနဗုဒ္ဓ ကီု ဝင်မန် ကီု ယေန်သၞာင်မန်တြေံ ကီုရ။';
+
+  p.expertise[0].title = { en: p.expertise[0].title, mon: 'AI သွက်ဂွံကၠောန်သုတေသနပညာ' };
+  p.expertise[0].desc.mon = 'စကာ AI သွက်ဂွံသ္ၚဳဂၠိပ်လိက်ပညာ၊ ကၠောန်သုတေသနဗုဒ္ဓဘာသာ ကေုာံ နဲကဲ AI-SMART Report ရ။';
+  p.expertise[1].title = { en: p.expertise[1].title, mon: 'ဗုဒ္ဓစိတ္တဗေဒ' };
+  p.expertise[1].desc.mon = 'စကာဗုဒ္ဓစိတ္တဗေဒ သွက်ဂွံဇၞော်မောဝ်ပတိုန် ဘဝမၞိဟ်၊ Resilience ကေုာံ ပညာကၠောန်ကမၠောန်ရ။';
+  p.expertise[2].title = { en: p.expertise[2].title, mon: 'ယေန်သၞာင်မန် ကေုာံ ပညာပါဠိ' };
+  p.expertise[2].desc.mon = 'ဗ္တောန်ဒဿနဓမ္မ ကီု ယေန်သၞာင်မန် ကီု ပညာပါဠိဇၞော် (သာသနဓဇဓမ္မာစရိယ) ကီုရ။';
+})(DEFAULT_PROFILE);
+
+function PREVIEW_DATA(){ var d = JSON.parse(JSON.stringify(DEFAULT_PROFILE)); d.theme = JSON.parse(JSON.stringify(DEFAULT_THEME)); return d; }
+</script>
+<script>
+/* ============================================================
+ *  STATE
+ * ============================================================ */
+var PROFILE = PREVIEW_DATA();
+var LANG    = 'th';
+var AUTO_EDIT = false;
+var TAB     = 'about';
+var TOKEN   = null;    // token จากเซิร์ฟเวอร์หลังใส่รหัสถูก
+var DRAFT   = null;    // สำเนาที่กำลังแก้ไข
+var DIRTY   = false;
+var SECTION = 'basic';
+var previewTimer = null;
+
+/* ============================================================
+ *  HELPERS
+ * ============================================================ */
+function t(v){
+  if (v === null || v === undefined) return '';
+  if (typeof v === 'string') return v;
+  return v[LANG] || v.th || v.en || v.mon || '';
+}
+function esc(s){
+  return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function urlOf(raw){
+  var s = String(raw || '').trim();
+  var m = s.match(/\((https?:\/\/[^)]+)\)/);
+  if (m) return m[1];
+  return /^https?:\/\//i.test(s) ? s : '';
+}
+function getP(obj, path){
+  var ps = path.split('.'), c = obj;
+  for (var i = 0; i < ps.length; i++){
+    if (c === null || c === undefined) return '';
+    c = c[ps[i]];
+  }
+  return (c === null || c === undefined) ? '' : c;
+}
+function setP(obj, path, val){
+  var ps = path.split('.'), c = obj;
+  for (var i = 0; i < ps.length - 1; i++){
+    if (c[ps[i]] === null || typeof c[ps[i]] !== 'object') c[ps[i]] = {};
+    c = c[ps[i]];
+  }
+  c[ps[ps.length - 1]] = val;
+}
+function clone(o){ return JSON.parse(JSON.stringify(o)); }
+function toast(msg, isErr){
+  var el = document.createElement('div');
+  el.className = 'toast' + (isErr ? ' err' : '');
+  el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(function(){ el.remove(); }, isErr ? 5000 : 2600);
+}
+
+var LANGS = [ {k:'th',n:'ไทย'}, {k:'en',n:'English'}, {k:'mon',n:'မန်'} ];
+var TAB_KEYS = ['about','work','papers','speeches'];
+
+/* ข้อความประจำหน้าเว็บ — แก้ทับได้ในหน้าจอแก้ไข ส่วน "ข้อความหน้าเว็บ" (เก็บใน PROFILE.ui) */
+var UI = {
+  tab_about:    { th:'ประวัติ',        en:'About',        mon:'ဝင်' },
+  tab_work:     { th:'ประสบการณ์',     en:'Experience',   mon:'ကမၠောန်' },
+  tab_papers:   { th:'ผลงานวิชาการ',   en:'Publications', mon:'ကမၠောန်ပညာ' },
+  tab_speeches: { th:'บรรยาย/วิทยากร', en:'Speaking',     mon:'ဟီုဂလာန်ပညာ' },
+  education:  { th:'การศึกษา',              en:'Education',          mon:'ပရေင်ပညာ' },
+  expertise:  { th:'ความเชี่ยวชาญ',         en:'Areas of Expertise', mon:'ပညာမကၠိုဟ်ခၠင်' },
+  contact:    { th:'ติดต่อ',                en:'Contact',            mon:'ဆက်စၠောအ်' },
+  experience: { th:'ประสบการณ์ทำงาน',      en:'Work Experience',    mon:'ကမၠောန်မကၠောန်လဝ်' },
+  papersHead: { th:'บทความและงานวิจัย',    en:'Articles & Research', mon:'လိက်ပညာ ကေုာံ ကမၠောန်သုတေသန' },
+  speechHead: { th:'การบรรยายและวิทยากรรับเชิญ', en:'Lectures & Invited Talks', mon:'ဟီုဂလာန်ပညာ' },
+  colDate:    { th:'วันที่',  en:'Date',  mon:'ဒိတ္ထဳ' },
+  colTopic:   { th:'หัวข้อ',  en:'Topic', mon:'ကိစ္စ' },
+  colVenue:   { th:'สถานที่', en:'Venue', mon:'ဌာန' },
+  colType:    { th:'ประเภท',  en:'Type',  mon:'ဂကူ' },
+  read:       { th:'อ่านบทความ →', en:'Read paper →', mon:'ဗှ်လိက် →' },
+  empty:      { th:'— ยังไม่มีข้อมูล —', en:'— No data yet —', mon:'— ဟွံမဲကဵုဒေတာ —' },
+  other:      { th:'ผลงานอื่น ๆ', en:'Other Works', mon:'ကမၠောန်တၞဟ်' }
+};
+/* ข้อความหน้าเว็บตามภาษาปัจจุบัน: ที่แก้ทับไว้ก่อน แล้วจึงใช้ค่าตั้งต้น */
+function u(k){
+  var ov = ((DRAFT || PROFILE).ui || {})[k] || {};
+  return ov[LANG] || t(UI[k]);
+}
+
+var ICONS = {
+  dharmachakra:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v6M12 15v6M3 12h6M15 12h6M5.6 5.6l4.2 4.2M14.2 14.2l4.2 4.2M18.4 5.6l-4.2 4.2M9.8 14.2l-4.2 4.2"/>',
+  scroll:'<path d="M19 17V5a2 2 0 0 0-2-2H5"/><path d="M8 21h11a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H8"/><path d="M3 7v10a2 2 0 0 0 2 2h3"/><path d="M3 7h5"/>',
+  bot:'<rect x="4" y="8" width="16" height="12" rx="2"/><path d="M12 8V4M8 2h8"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/>',
+  brain:'<path d="M9.5 3a3 3 0 0 0-3 3 3 3 0 0 0-1.5 5.5A3 3 0 0 0 6 17a3 3 0 0 0 3.5 3V3Z"/><path d="M14.5 3a3 3 0 0 1 3 3 3 3 0 0 1 1.5 5.5A3 3 0 0 1 18 17a3 3 0 0 1-3.5 3V3Z"/>',
+  languages:'<path d="M2 5h10M7 3v2c0 5-2.5 7-5 8"/><path d="M6 10c1.5 3 4 4.5 6 5"/><path d="m13 21 5-11 5 11M15.5 17h5"/>',
+  building:'<rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 8h.01M15 8h.01M9 12h.01M15 12h.01M10 21v-4h4v4"/>',
+  mail:'<rect x="2" y="5" width="20" height="14" rx="2"/><path d="m2 7 10 6 10-6"/>',
+  globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/>',
+  book:'<path d="M4 4v15a1 1 0 0 0 1 1h15"/><path d="M20 4H6a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h14z"/>',
+  award:'<circle cx="12" cy="9" r="6"/><path d="m8.2 13.9-1.7 6.6 5.5-3 5.5 3-1.7-6.6"/>',
+  users:'<path d="M16 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 20v-2a4 4 0 0 0-3-3.9"/>',
+  mic:'<rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/>',
+  lock:'<rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>',
+  unlock:'<rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 7.5-2"/>'
+};
+var NOPHOTO = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="-8 -8 40 40" fill="%23c8952f"><path d="M12 2a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 12a8 8 0 0 0-8 8h16a8 8 0 0 0-8-8z"/></svg>';
+function icon(name){
+  var p = ICONS[name] || ICONS.book;
+  return '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + p + '</svg>';
+}
+
+/* ============================================================
+ *  THEME
+ * ============================================================ */
+var CUSTOM_KEYS = { bg:'--bg', card:'--card', ink:'--ink', muted:'--muted', line:'--line' };
+
+function applyTheme(th){
+  th = th || {};
+  var root = document.documentElement, s = root.style;
+  root.setAttribute('data-mode', th.mode || 'auto');
+
+  if (th.accent) s.setProperty('--accent', th.accent);
+  if (th.font)   s.setProperty('--font', "'" + th.font + "','Noto Sans Thai','Noto Sans Myanmar','Segoe UI',Tahoma,sans-serif");
+  s.setProperty('--radius', (th.radius || 14) + 'px');
+  s.setProperty('--cover-h', (th.coverHeight || 220) + 'px');
+  s.setProperty('--cover-op', String(th.coverOpacity == null ? .55 : th.coverOpacity));
+
+  for (var k in CUSTOM_KEYS){
+    if (th.useCustom && th[k]) s.setProperty(CUSTOM_KEYS[k], th[k]);
+    else s.removeProperty(CUSTOM_KEYS[k]);
+  }
+}
+
+/* ============================================================
+ *  VIEW
+ * ============================================================ */
+function renderView(){
+  var P = DRAFT || PROFILE;
+  document.documentElement.lang = (LANG === 'mon') ? 'mnw' : LANG;
+  applyTheme(P.theme);
+
+  var cover = document.getElementById('cover');
+  var cu = urlOf(P.cover);
+  if (cu){ cover.src = cu; cover.style.display = ''; } else { cover.removeAttribute('src'); cover.style.display = 'none'; }
+
+  var av = document.getElementById('avatar');
+  av.alt = t(P.name);
+  av.onerror = function(){ this.onerror = null; this.src = NOPHOTO; };   // ลิงก์รูปเสีย/หมดอายุ
+  av.src = urlOf(P.photo) || NOPHOTO;
+
+  document.getElementById('name').textContent     = t(P.name);
+  document.getElementById('subname').textContent  = (LANG === 'en') ? ((P.name && P.name.th) || '') : (P.nameEn || '');
+  document.getElementById('position').textContent = t(P.position);
+  document.getElementById('origin').textContent   = t(P.origin);
+  document.title = t(P.name) + ' | ' + (P.nameEn || '');
+
+  document.getElementById('badges').innerHTML = (P.badges || []).map(function(b){
+    return '<span class="badge">' + icon(b.icon) + '<span>' + esc(t(b.text)) + '</span></span>';
+  }).join('');
+
+  LANGS.forEach(function(l){
+    document.getElementById('btn-' + l.k).className = (LANG === l.k) ? 'on' : '';
+  });
+  var lb = document.getElementById('lockbtn');
+  lb.innerHTML = icon(TOKEN ? 'unlock' : 'lock');
+  lb.className = 'lockbtn' + (TOKEN ? ' on' : '');
+  lb.title = TOKEN ? 'เปิดหน้าจอแก้ไข' : 'แก้ไขข้อมูล (ต้องใส่รหัส)';
+
+  document.getElementById('tabs').innerHTML = TAB_KEYS.map(function(k){
+    return '<button class="' + (TAB === k ? 'on' : '') + '" onclick="setTab(\'' + k + '\')">' + esc(u('tab_' + k)) + '</button>';
+  }).join('');
+
+  renderAbout(P); renderWork(P); renderPapers(P); renderSpeeches(P);
+  ['about','work','papers','speeches'].forEach(function(k){
+    document.getElementById('panel-' + k).className = (k === TAB) ? '' : 'hide';
+  });
+
+  document.getElementById('footer').innerHTML =
+    '&copy; ' + new Date().getFullYear() + ' ' + esc(t(P.name)) + ' &middot; ' + esc(t((P.contact || {}).institution));
+}
+
+function renderAbout(P){
+  var edu = (P.education || []).map(function(e){
+    return '<div class="card"><span class="chip">' + esc(t(e.status)) + '</span>' +
+      '<h3>' + esc(t(e.title)) + '</h3><p>' + esc(t(e.sub)) + '</p></div>';
+  }).join('') || emptyCard();
+
+  var exp = (P.expertise || []).map(function(x){
+    return '<div class="card exp"><div class="ic">' + icon(x.icon) + '</div>' +
+      '<h3>' + esc(t(x.title)) + '</h3><p>' + esc(t(x.desc)) + '</p></div>';
+  }).join('') || emptyCard();
+
+  var c = P.contact || {}, site = urlOf(c.website);
+  var contact = '<div class="card"><div class="contact">' +
+    '<div>' + icon('building') + '<span>' + esc(t(c.institution)) + '</span></div>' +
+    (c.email ? '<div>' + icon('mail') + '<a href="mailto:' + esc(c.email) + '">' + esc(c.email) + '</a></div>' : '') +
+    (site ? '<div>' + icon('globe') + '<a href="' + esc(site) + '" target="_blank" rel="noopener">' +
+            esc(c.websiteLabel || site.replace(/^https?:\/\//,'')) + '</a></div>' : '') +
+  '</div></div>';
+
+  document.getElementById('panel-about').innerHTML =
+    '<div class="sectitle">' + esc(u('education')) + '</div><div class="grid two">' + edu + '</div>' +
+    '<div class="sectitle">' + esc(u('expertise')) + '</div><div class="grid three">' + exp + '</div>' +
+    '<div class="sectitle">' + esc(u('contact'))   + '</div>' + contact;
+}
+
+function renderWork(P){
+  var items = (P.experience || []).map(function(w){
+    return '<div class="card"><h3>' + esc(t(w.title)) + '</h3>' +
+      '<p class="sub">' + esc(t(w.sub)) + '</p><p>' + esc(t(w.desc)) + '</p></div>';
+  }).join('') || emptyCard();
+
+  var other = (P.otherWorks || []).map(function(w){
+    return '<div class="card"><h3>' + esc(t(w.title)) + '</h3>' +
+      (w.desc ? '<p>' + esc(t(w.desc)) + '</p>' : '') + '</div>';
+  }).join('');
+
+  document.getElementById('panel-work').innerHTML =
+    '<div class="sectitle">' + esc(u('experience')) + '</div><div class="grid two">' + items + '</div>' +
+    (other ? '<div class="sectitle">' + esc(u('other')) + '</div><div class="grid two">' + other + '</div>' : '');
+}
+
+function renderPapers(P){
+  var items = (P.papers || []).map(function(p){
+    var link = urlOf(p.url), img = urlOf(p.image);
+    return '<div class="card paper">' +
+      (img ? '<div class="thumb"><img src="' + esc(img) + '" alt="" loading="lazy" onerror="this.parentNode.style.display=\'none\'"></div>' : '') +
+      '<div class="body"><h3>' + esc(t(p.title)) + '</h3>' +
+      (t(p.note) ? '<p class="sub">' + esc(t(p.note)) + '</p>' : '') +
+      '<p>' + esc(t(p.authors)) + '</p>' +
+      (link ? '<a class="link" href="' + esc(link) + '" target="_blank" rel="noopener">' + esc(u('read')) + '</a>' : '') +
+      '</div></div>';
+  }).join('') || emptyCard();
+
+  document.getElementById('panel-papers').innerHTML =
+    '<div class="sectitle">' + esc(u('papersHead')) + ' (' + (P.papers || []).length + ')</div>' +
+    '<div class="grid two">' + items + '</div>';
+}
+
+function renderSpeeches(P){
+  var rows = (P.speeches || []).map(function(s){
+    return '<tr><td class="date">' + esc(t(s.date)) + '</td><td>' + esc(t(s.topic)) + '</td>' +
+      '<td>' + esc(t(s.venue)) + '</td><td><span class="tag">' + esc(t(s.type)) + '</span></td></tr>';
+  }).join('');
+
+  document.getElementById('panel-speeches').innerHTML =
+    '<div class="sectitle">' + esc(u('speechHead')) + ' (' + (P.speeches || []).length + ')</div>' +
+    '<div class="tablewrap"><table><thead><tr>' +
+      '<th>' + esc(u('colDate'))  + '</th><th>' + esc(u('colTopic')) + '</th>' +
+      '<th>' + esc(u('colVenue')) + '</th><th>' + esc(u('colType'))  + '</th>' +
+    '</tr></thead><tbody>' + (rows || '<tr><td colspan="4">' + esc(u('empty')) + '</td></tr>') + '</tbody></table></div>';
+}
+
+function emptyCard(){ return '<div class="card"><p>' + esc(u('empty')) + '</p></div>'; }
+function setTab(k){ TAB = k; renderView(); window.scrollTo({top:0, behavior:'smooth'}); }
+function setLang(l){ LANG = l; renderView(); if (isEditorOpen()) renderEditor(); }
+
+/* ============================================================
+ *  AUTH
+ * ============================================================ */
+function lockClick(){ if (TOKEN) openEditor(); else openLogin(); }
+
+function openLogin(){
+  document.getElementById('loginErr').textContent = '';
+  document.getElementById('codeInput').value = '';
+  document.getElementById('loginMask').classList.remove('hide');
+  setTimeout(function(){ document.getElementById('codeInput').focus(); }, 60);
+}
+function closeLogin(){ document.getElementById('loginMask').classList.add('hide'); }
+
+function doLogin(){
+  var code = document.getElementById('codeInput').value;
+  var btn  = document.getElementById('loginBtn');
+  var err  = document.getElementById('loginErr');
+  btn.disabled = true; err.textContent = 'กำลังตรวจสอบ...';
+
+  google.script.run
+    .withSuccessHandler(function(res){
+      btn.disabled = false;
+      if (res && res.ok){
+        TOKEN = res.token;
+        closeLogin();
+        openEditor();
+        renderView();
+      } else {
+        err.textContent = (res && res.msg) || 'รหัสไม่ถูกต้อง';
+        document.getElementById('codeInput').select();
+      }
+    })
+    .withFailureHandler(function(e){
+      btn.disabled = false;
+      err.textContent = 'เกิดข้อผิดพลาด: ' + e.message;
+    })
+    .login(code);
+}
+
+function doLogout(){
+  if (DIRTY && !confirm('ยังมีการแก้ไขที่ไม่ได้บันทึก ต้องการออกจากระบบหรือไม่?')) return;
+  google.script.run.logout(TOKEN);
+  TOKEN = null; DRAFT = null; DIRTY = false;
+  document.getElementById('editor').classList.add('hide');
+  renderView();
+  toast('ออกจากโหมดแก้ไขแล้ว');
+}
+
+/* ============================================================
+ *  EDITOR — โครงสร้างฟิลด์
+ * ============================================================ */
+var SECTIONS = [
+  { k:'basic',      n:'ข้อมูลหลัก' },
+  { k:'contact',    n:'ข้อมูลติดต่อ' },
+  { k:'badges',     n:'ป้ายเกียรติคุณ' },
+  { k:'education',  n:'การศึกษา' },
+  { k:'experience', n:'ประสบการณ์' },
+  { k:'expertise',  n:'ความเชี่ยวชาญ' },
+  { k:'papers',     n:'ผลงานวิชาการ' },
+  { k:'speeches',   n:'บรรยาย/วิทยากร' },
+  { k:'otherWorks', n:'ผลงานอื่น ๆ' },
+  { k:'uitext',     n:'ข้อความหน้าเว็บ' },
+  { k:'theme',      n:'ธีมและสี' },
+  { k:'settings',   n:'ตั้งค่า / รหัสผ่าน' }
+];
+
+var LISTS = {
+  badges: {
+    title:'ป้ายเกียรติคุณ', desc:'ป้ายเล็ก ๆ ใต้ชื่อ',
+    label:function(o){ return t(o.text) || 'ป้ายใหม่'; },
+    fields:[ {p:'icon',t:'icon',l:'ไอคอน'}, {p:'text',t:'bi',l:'ข้อความ'} ],
+    blank:function(){ return { icon:'scroll', text:{th:'',en:''} }; }
+  },
+  education: {
+    title:'การศึกษา', desc:'เรียงจากล่าสุดไปเก่าสุด',
+    label:function(o){ return t(o.title) || 'รายการใหม่'; },
+    fields:[ {p:'status',t:'bi',l:'สถานะ (เช่น กำลังศึกษา)'}, {p:'title',t:'bi',l:'วุฒิ/หลักสูตร',area:true}, {p:'sub',t:'bi',l:'สถาบัน/รายละเอียด',area:true} ],
+    blank:function(){ return { status:{th:'',en:''}, title:{th:'',en:''}, sub:{th:'',en:''} }; }
+  },
+  experience: {
+    title:'ประสบการณ์ทำงาน', desc:'',
+    label:function(o){ return t(o.title) || 'รายการใหม่'; },
+    fields:[ {p:'title',t:'bi',l:'ตำแหน่ง'}, {p:'sub',t:'bi',l:'หน่วยงาน',area:true}, {p:'desc',t:'bi',l:'รายละเอียดงาน',area:true} ],
+    blank:function(){ return { title:{th:'',en:''}, sub:{th:'',en:''}, desc:{th:'',en:''} }; }
+  },
+  expertise: {
+    title:'ความเชี่ยวชาญ', desc:'',
+    label:function(o){ return t(o.title) || 'รายการใหม่'; },
+    fields:[ {p:'icon',t:'icon',l:'ไอคอน'}, {p:'title',t:'bi',l:'หัวข้อ'}, {p:'desc',t:'bi',l:'คำอธิบาย',area:true} ],
+    blank:function(){ return { icon:'brain', title:{th:'',en:''}, desc:{th:'',en:''} }; }
+  },
+  papers: {
+    title:'ผลงานวิชาการ', desc:'บทความ งานวิจัย และผลงานตีพิมพ์',
+    label:function(o){ return t(o.title) || 'ผลงานใหม่'; },
+    fields:[ {p:'title',t:'bi',l:'ชื่อบทความ',area:true}, {p:'authors',t:'bi',l:'ผู้แต่ง',area:true},
+             {p:'note',t:'bi',l:'แหล่งเผยแพร่ / สถานะ (เว้นว่างได้)',area:true},
+             {p:'url',t:'text',l:'ลิงก์บทความ (ไม่มีก็เว้นว่าง)'}, {p:'image',t:'img',l:'ภาพประกอบ'} ],
+    blank:function(){ return { title:{th:'',en:''}, authors:{th:'',en:''}, note:{th:'',en:''}, url:'', image:'' }; }
+  },
+  speeches: {
+    title:'บรรยาย / วิทยากร', desc:'',
+    label:function(o){ return t(o.topic) || 'รายการใหม่'; },
+    fields:[ {p:'date',t:'bi',l:'วันที่'}, {p:'topic',t:'bi',l:'หัวข้อ',area:true},
+             {p:'venue',t:'bi',l:'สถานที่',area:true}, {p:'type',t:'bi',l:'ประเภท'} ],
+    blank:function(){ return { date:'', topic:'', venue:'', type:'' }; }
+  },
+  otherWorks: {
+    title:'ผลงานอื่น ๆ', desc:'',
+    label:function(o){ return t(o.title) || 'รายการใหม่'; },
+    fields:[ {p:'title',t:'bi',l:'ชื่อผลงาน'}, {p:'desc',t:'bi',l:'รายละเอียด',area:true} ],
+    blank:function(){ return { title:{th:'',en:''}, desc:{th:'',en:''} }; }
+  }
+};
+
+/* ---------- ตัวสร้างฟิลด์ ---------- */
+function inputHtml(path, val, area, ph){
+  var v = esc(val);
+  return area
+    ? '<textarea data-p="' + esc(path) + '" placeholder="' + esc(ph || '') + '">' + v + '</textarea>'
+    : '<input type="text" data-p="' + esc(path) + '" value="' + v + '" placeholder="' + esc(ph || '') + '">';
+}
+function fText(path, label, area, ph){
+  return '<div class="fld"><label class="fl">' + esc(label) + '</label>' +
+         inputHtml(path, getP(DRAFT, path), area, ph) + '</div>';
+}
+/* สตริงเดี่ยวของเดิม → แยกเป็นรายภาษาตามอักษรที่ใช้ */
+function toBi(v){
+  if (v !== null && typeof v === 'object') return v;
+  var s = String(v == null ? '' : v);
+  if (/[฀-๿]/.test(s)) return { th:s, en:'', mon:'' };
+  if (/[က-႟]/.test(s)) return { th:'', en:'', mon:s };
+  return { th:'', en:s, mon:'' };
+}
+function triInputs(path, cur, area){
+  return '<div class="fld tri" style="margin:0">' + LANGS.map(function(l){
+    return '<div><span class="lg">' + esc(l.n) + '</span>' +
+      inputHtml(path + '.' + l.k, cur[l.k] || '', area, l.n) + '</div>';
+  }).join('') + '</div>';
+}
+/** ฟิลด์ ๓ ภาษา (ไทย / อังกฤษ / มอญ) — ค่าสตริงเดิมถูกแปลงเป็นรายภาษาเมื่อเปิดแก้ */
+function fBi(path, label, area){
+  var cur = getP(DRAFT, path);
+  if (cur === null || typeof cur !== 'object'){
+    cur = toBi(cur);
+    setP(DRAFT, path, cur);
+  }
+  return '<div class="fld"><label class="fl">' + esc(label) + '</label>' + triInputs(path, cur, area) + '</div>';
+}
+function fIcon(path, label){
+  var cur = getP(DRAFT, path);
+  var opts = Object.keys(ICONS).map(function(k){
+    return '<option value="' + k + '"' + (k === cur ? ' selected' : '') + '>' + k + '</option>';
+  }).join('');
+  return '<div class="fld"><label class="fl">' + esc(label) + '</label>' +
+    '<div class="row"><span class="badge" style="padding:6px">' + icon(cur) + '</span>' +
+    '<select data-p="' + esc(path) + '" style="flex:1">' + opts + '</select></div></div>';
+}
+function fImg(path, label){
+  var cur = getP(DRAFT, path);
+  var uid = 'f_' + path.replace(/\W/g,'_');
+  return '<div class="fld"><label class="fl">' + esc(label) + '</label>' +
+    inputHtml(path, cur, false, 'วางลิงก์รูป https://...') +
+    '<div class="thumbrow">' +
+      '<img src="' + esc(urlOf(cur)) + '" alt="" onerror="this.style.visibility=\'hidden\'" onload="this.style.visibility=\'visible\'">' +
+      '<input type="file" id="' + uid + '" accept="image/*" class="hide" onchange="pickImage(this,\'' + esc(path) + '\')">' +
+      '<button class="btn ghost" type="button" onclick="document.getElementById(\'' + uid + '\').click()">อัปโหลดรูป</button>' +
+      (cur ? '<button class="btn ghost" type="button" onclick="clearField(\'' + esc(path) + '\')">ลบรูป</button>' : '') +
+    '</div></div>';
+}
+function fColor(path, label){
+  var cur = getP(DRAFT, path) || '#000000';
+  var id  = 'c_' + path.replace(/\W/g,'_');
+  return '<div class="fld"><label class="fl">' + esc(label) + '</label><div class="row">' +
+    '<input type="color" id="' + id + '" data-p="' + esc(path) + '" data-mirror="' + id + '_t" value="' + esc(cur) + '">' +
+    '<input type="text" id="' + id + '_t" data-p="' + esc(path) + '" data-mirror="' + id + '" value="' + esc(cur) + '" style="flex:1">' +
+    '</div></div>';
+}
+function fRange(path, label, min, max, step){
+  var cur = getP(DRAFT, path);
+  return '<div class="fld"><label class="fl">' + esc(label) + ' (' + esc(cur) + ')</label>' +
+    '<input type="range" data-p="' + esc(path) + '" data-num="1" data-relabel="1" min="' + min + '" max="' + max + '" step="' + step + '" value="' + esc(cur) + '" style="width:100%">' +
+    '</div>';
+}
+function fSelect(path, label, opts){
+  var cur = getP(DRAFT, path);
+  var o = opts.map(function(x){
+    var v = x.v !== undefined ? x.v : x, n = x.n !== undefined ? x.n : x;
+    return '<option value="' + esc(v) + '"' + (String(v) === String(cur) ? ' selected' : '') + '>' + esc(n) + '</option>';
+  }).join('');
+  return '<div class="fld"><label class="fl">' + esc(label) + '</label><select data-p="' + esc(path) + '">' + o + '</select></div>';
+}
+function fCheck(path, label){
+  var cur = !!getP(DRAFT, path);
+  return '<div class="fld"><label class="row" style="cursor:pointer">' +
+    '<input type="checkbox" data-p="' + esc(path) + '"' + (cur ? ' checked' : '') + ' style="width:auto">' +
+    '<span style="font-size:14px">' + esc(label) + '</span></label></div>';
+}
+
+/* ---------- หน้าจอแก้ไข ---------- */
+function isEditorOpen(){ return !document.getElementById('editor').classList.contains('hide'); }
+
+function openEditor(){
+  if (!TOKEN){ openLogin(); return; }
+  if (!DRAFT) DRAFT = clone(PROFILE);
+  document.getElementById('peekBar').classList.add('hide');
+  document.getElementById('editor').classList.remove('hide');
+  renderEditor();
+}
+/* ซ่อนหน้าจอแก้ไขชั่วคราวเพื่อดูหน้าเว็บจริงพร้อมข้อมูลที่ยังไม่บันทึก */
+var peekScroll = 0;
+function peekPage(){
+  peekScroll = document.getElementById('edMain').scrollTop;
+  document.getElementById('editor').classList.add('hide');
+  document.getElementById('peekBar').classList.remove('hide');
+  renderView();
+}
+function backToEditor(){
+  openEditor();
+  document.getElementById('edMain').scrollTop = peekScroll;
+}
+function closeEditor(){
+  if (DIRTY && !confirm('ยังมีการแก้ไขที่ยังไม่ได้บันทึก ต้องการปิดหน้าจอแก้ไขหรือไม่?\n(การแก้ไขจะหายไป)')) return;
+  DRAFT = null; DIRTY = false;
+  document.getElementById('editor').classList.add('hide');
+  renderView();
+}
+
+function renderEditor(){
+  document.getElementById('edNav').innerHTML = SECTIONS.map(function(s){
+    return '<button class="' + (SECTION === s.k ? 'on' : '') + '" onclick="goSection(\'' + s.k + '\')">' + esc(s.n) + '</button>';
+  }).join('');
+
+  var h = '';
+  if (SECTION === 'basic'){
+    h = '<h2>ข้อมูลหลัก</h2><p class="desc">ชื่อ ตำแหน่ง รูปโปรไฟล์ และภาพหน้าปก</p>' +
+      fBi('name','ชื่อ') +
+      fText('nameEn','ชื่อบรรทัดรอง (แสดงใต้ชื่อหลัก)') +
+      fBi('position','ตำแหน่ง / สังกัด', true) +
+      fBi('origin','ชาติภูมิ', true) +
+      fImg('photo','รูปโปรไฟล์') +
+      fImg('cover','ภาพหน้าปก (Cover)');
+  } else if (SECTION === 'contact'){
+    h = '<h2>ข้อมูลติดต่อ</h2><p class="desc"></p>' +
+      fBi('contact.institution','สถาบัน', true) +
+      fText('contact.email','อีเมล') +
+      fText('contact.website','เว็บไซต์ (ขึ้นต้นด้วย https://)') +
+      fText('contact.websiteLabel','ข้อความที่แสดงแทนลิงก์');
+  } else if (SECTION === 'uitext'){
+    h = renderUiTextSection();
+  } else if (SECTION === 'theme'){
+    h = renderThemeSection();
+  } else if (SECTION === 'settings'){
+    h = renderSettingsSection();
+  } else {
+    h = renderListSection(SECTION);
+  }
+  document.getElementById('edMain').innerHTML = h;
+  document.getElementById('edMain').scrollTop = 0;
+  markDirty(DIRTY);
+}
+
+function goSection(k){ SECTION = k; renderEditor(); }
+
+function renderListSection(key){
+  var cfg = LISTS[key], arr = DRAFT[key] || (DRAFT[key] = []);
+  var items = arr.map(function(item, i){
+    var body = cfg.fields.map(function(f){
+      var path = key + '.' + i + '.' + f.p;
+      if (f.t === 'bi')   return fBi(path, f.l, f.area);
+      if (f.t === 'img')  return fImg(path, f.l);
+      if (f.t === 'icon') return fIcon(path, f.l);
+      return fText(path, f.l, f.area);
+    }).join('');
+
+    return '<div class="item"><div class="item-head">' +
+      '<span>' + esc((i + 1) + '. ' + cfg.label(item)) + '</span>' +
+      '<button class="ib" title="เลื่อนขึ้น" onclick="moveItem(\'' + key + '\',' + i + ',-1)">↑</button>' +
+      '<button class="ib" title="เลื่อนลง" onclick="moveItem(\'' + key + '\',' + i + ',1)">↓</button>' +
+      '<button class="ib" title="ทำสำเนา" onclick="dupItem(\'' + key + '\',' + i + ')">⧉</button>' +
+      '<button class="ib del" title="ลบ" onclick="delItem(\'' + key + '\',' + i + ')">✕</button>' +
+      '</div>' + body + '</div>';
+  }).join('');
+
+  return '<h2>' + esc(cfg.title) + ' <span style="color:var(--muted);font-size:15px">(' + arr.length + ')</span></h2>' +
+    '<p class="desc">' + esc(cfg.desc || '') + '</p>' +
+    (items || '<div class="note">ยังไม่มีรายการ กด “เพิ่มรายการ” ด้านล่าง</div>') +
+    '<button class="btn" onclick="addItem(\'' + key + '\')">+ เพิ่มรายการ</button>';
+}
+
+function renderUiTextSection(){
+  var ov = DRAFT.ui || {};
+  var rows = Object.keys(UI).map(function(k){
+    var cur = {};
+    LANGS.forEach(function(l){ cur[l.k] = (ov[k] && ov[k][l.k]) || UI[k][l.k]; });
+    return '<div class="fld"><label class="fl">' + esc(UI[k].th) + '</label>' + triInputs('ui.' + k, cur) + '</div>';
+  }).join('');
+  return '<h2>ข้อความหน้าเว็บ</h2><p class="desc">ชื่อแท็บ หัวข้อ และป้ายต่าง ๆ แก้ได้ทั้ง ๓ ภาษา ช่องที่ลบจนว่างจะกลับไปใช้ค่าตั้งต้น</p>' +
+    rows +
+    '<div class="row" style="margin-top:16px"><button class="btn ghost" onclick="resetUiText()">คืนค่าข้อความหน้าเว็บ</button></div>';
+}
+
+function renderThemeSection(){
+  return '<h2>ธีมและสี</h2><p class="desc">กด “ดูตัวอย่าง” ด้านบนเพื่อดูผลบนหน้าเว็บ กด “บันทึก” เพื่อให้มีผลถาวร</p>' +
+    fSelect('theme.mode','โหมดสี',[{v:'auto',n:'อัตโนมัติตามเครื่องผู้ชม'},{v:'light',n:'สว่างเสมอ'},{v:'dark',n:'มืดเสมอ'}]) +
+    fColor('theme.accent','สีหลัก (ปุ่ม/ไอคอน/ป้าย)') +
+    fSelect('theme.font','ฟอนต์',[
+      {v:'Sarabun',n:'Sarabun (สารบรรณ)'},{v:'Noto Sans Thai',n:'Noto Sans Thai'},
+      {v:'Kanit',n:'Kanit'},{v:'Prompt',n:'Prompt'},{v:'IBM Plex Sans Thai',n:'IBM Plex Sans Thai'}
+    ]) +
+    fRange('theme.radius','ความมนของมุมการ์ด', 0, 28, 1) +
+    fRange('theme.coverHeight','ความสูงภาพหน้าปก', 120, 420, 10) +
+    fRange('theme.coverOpacity','ความเข้มภาพหน้าปก', 0.1, 1, 0.05) +
+    '<div class="note">เปิด “กำหนดสีเอง” เพื่อคุมสีพื้นหลังและตัวอักษรทั้งหมดด้วยตัวเอง (จะไม่สลับสว่าง/มืดอัตโนมัติ)</div>' +
+    fCheck('theme.useCustom','กำหนดสีพื้นหลัง/ตัวอักษรเอง') +
+    fColor('theme.bg','สีพื้นหลังหน้า') +
+    fColor('theme.card','สีพื้นการ์ด') +
+    fColor('theme.ink','สีตัวอักษรหลัก') +
+    fColor('theme.muted','สีตัวอักษรรอง') +
+    fColor('theme.line','สีเส้นขอบ') +
+    '<div class="row" style="margin-top:16px"><button class="btn ghost" onclick="resetTheme()">คืนค่าธีมเริ่มต้น</button></div>';
+}
+
+function renderSettingsSection(){
+  return '<h2>ตั้งค่า</h2><p class="desc">รหัสผ่าน สำรองข้อมูล และนำเข้า/ส่งออก</p>' +
+    '<div class="item"><div class="item-head"><span>เปลี่ยนรหัสผ่าน</span></div>' +
+      '<div class="fld"><label class="fl">รหัสเดิม</label><input type="password" id="pw_old" autocomplete="off"></div>' +
+      '<div class="fld"><label class="fl">รหัสใหม่ (อย่างน้อย 4 ตัว)</label><input type="password" id="pw_new" autocomplete="off"></div>' +
+      '<div class="fld"><label class="fl">ยืนยันรหัสใหม่</label><input type="password" id="pw_new2" autocomplete="off"></div>' +
+      '<button class="btn" onclick="doChangeCode()">เปลี่ยนรหัส</button></div>' +
+
+    '<div class="item"><div class="item-head"><span>ย้อนกลับ / คืนค่า</span></div>' +
+      '<p class="desc">ระบบเก็บข้อมูลฉบับก่อนหน้าไว้ 1 เวอร์ชัน</p>' +
+      '<div class="row"><button class="btn ghost" onclick="doRestore()">ย้อนกลับเวอร์ชันก่อนหน้า</button>' +
+      '<button class="btn danger" onclick="doReset()">คืนค่าเริ่มต้นทั้งหมด</button></div></div>' +
+
+    '<div class="item"><div class="item-head"><span>ส่งออก / นำเข้า JSON</span></div>' +
+      '<div class="fld"><label class="fl">ข้อมูลปัจจุบัน (คัดลอกเก็บไว้ได้)</label>' +
+      '<textarea id="jsonBox" style="min-height:180px; font-family:monospace; font-size:12px">' + esc(JSON.stringify(DRAFT, null, 2)) + '</textarea></div>' +
+      '<div class="row"><button class="btn ghost" onclick="copyJson()">คัดลอก</button>' +
+      '<button class="btn ghost" onclick="downloadJson()">ดาวน์โหลดไฟล์</button>' +
+      '<button class="btn" onclick="importJson()">นำเข้าจากช่องนี้</button></div></div>' +
+
+    '<div class="row" style="margin-top:18px"><button class="btn ghost" onclick="doLogout()">ออกจากโหมดแก้ไข</button></div>';
+}
+
+/* ---------- การผูกค่าจากฟอร์ม ---------- */
+document.getElementById('edMain').addEventListener('input', onField);
+document.getElementById('edMain').addEventListener('change', onField);
+
+function onField(ev){
+  var el = ev.target, path = el.getAttribute && el.getAttribute('data-p');
+  if (!path) return;
+
+  var val;
+  if (el.type === 'checkbox') val = el.checked;
+  else if (el.getAttribute('data-num')) val = Number(el.value);
+  else val = el.value;
+
+  setP(DRAFT, path, val);
+
+  var mirror = el.getAttribute('data-mirror');
+  if (mirror){
+    var m = document.getElementById(mirror);
+    if (m && m.value !== el.value) m.value = el.value;
+  }
+  if (el.getAttribute('data-relabel')){
+    var lab = el.parentNode.querySelector('label.fl');
+    if (lab) lab.textContent = lab.textContent.replace(/\s*\(.*\)$/, '') + ' (' + el.value + ')';
+  }
+  markDirty(true);
+  schedulePreview();
+}
+
+function schedulePreview(){
+  clearTimeout(previewTimer);
+  previewTimer = setTimeout(renderView, 220);
+}
+function markDirty(v){
+  DIRTY = v;
+  document.getElementById('dirtyFlag').textContent = v ? '● มีการแก้ไขที่ยังไม่บันทึก' : '';
+}
+
+/* ---------- จัดการรายการในลิสต์ ---------- */
+function addItem(key){
+  DRAFT[key] = DRAFT[key] || [];
+  DRAFT[key].push(LISTS[key].blank());
+  markDirty(true); renderEditor(); renderView();
+  var main = document.getElementById('edMain');
+  main.scrollTop = main.scrollHeight;
+}
+function delItem(key, i){
+  if (!confirm('ลบรายการนี้?')) return;
+  DRAFT[key].splice(i, 1);
+  markDirty(true); renderEditor(); renderView();
+}
+function dupItem(key, i){
+  DRAFT[key].splice(i + 1, 0, clone(DRAFT[key][i]));
+  markDirty(true); renderEditor(); renderView();
+}
+function moveItem(key, i, d){
+  var a = DRAFT[key], j = i + d;
+  if (j < 0 || j >= a.length) return;
+  var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+  markDirty(true); renderEditor(); renderView();
+}
+function clearField(path){
+  setP(DRAFT, path, '');
+  markDirty(true); renderEditor(); renderView();
+}
+function resetUiText(){
+  if (!confirm('คืนค่าข้อความหน้าเว็บทั้งหมดเป็นค่าเริ่มต้น?')) return;
+  delete DRAFT.ui;
+  markDirty(true); renderEditor(); renderView();
+}
+function resetTheme(){
+  if (!confirm('คืนค่าธีมเป็นค่าเริ่มต้น?')) return;
+  DRAFT.theme = { mode:'auto', accent:'#c8952f', useCustom:false, bg:'#faf7f1', card:'#ffffff',
+                  ink:'#221a10', muted:'#6b6152', line:'#e8e0d2', font:'Sarabun',
+                  radius:14, coverHeight:220, coverOpacity:0.55 };
+  markDirty(true); renderEditor(); renderView();
+}
+
+/* ---------- อัปโหลดรูป ---------- */
+function pickImage(input, path){
+  var f = input.files && input.files[0];
+  if (!f) return;
+  if (f.size > 8 * 1024 * 1024){ toast('ไฟล์ใหญ่เกิน 8MB', true); input.value = ''; return; }
+
+  toast('กำลังอัปโหลด...');
+  var fr = new FileReader();
+  fr.onload = function(){
+    google.script.run
+      .withSuccessHandler(function(res){
+        setP(DRAFT, path, res.url);
+        markDirty(true); renderEditor(); renderView();
+        toast('อัปโหลดรูปเรียบร้อย');
+      })
+      .withFailureHandler(function(e){ toast('อัปโหลดไม่สำเร็จ: ' + e.message, true); })
+      .uploadImage(TOKEN, fr.result, f.name);
+  };
+  fr.onerror = function(){ toast('อ่านไฟล์ไม่สำเร็จ', true); };
+  fr.readAsDataURL(f);
+}
+
+/* ---------- บันทึก / คำสั่งอื่น ---------- */
+function saveAll(){
+  if (!TOKEN){ toast('เซสชันหมดอายุ กรุณาใส่รหัสใหม่', true); openLogin(); return; }
+  var btn = document.getElementById('saveBtn');
+  btn.disabled = true; btn.textContent = 'กำลังบันทึก...';
+
+  google.script.run
+    .withSuccessHandler(function(res){
+      btn.disabled = false; btn.textContent = 'บันทึก';
+      PROFILE = res.data;
+      DRAFT = clone(PROFILE);
+      markDirty(false);
+      renderView(); renderEditor();
+      toast(res.msg || 'บันทึกเรียบร้อย');
+    })
+    .withFailureHandler(function(e){
+      btn.disabled = false; btn.textContent = 'บันทึก';
+      toast('บันทึกไม่สำเร็จ: ' + e.message, true);
+    })
+    .saveProfile(TOKEN, JSON.stringify(DRAFT));
+}
+
+function doChangeCode(){
+  var o = document.getElementById('pw_old').value;
+  var n = document.getElementById('pw_new').value;
+  var n2 = document.getElementById('pw_new2').value;
+  if (n !== n2){ toast('รหัสใหม่ทั้งสองช่องไม่ตรงกัน', true); return; }
+
+  google.script.run
+    .withSuccessHandler(function(res){
+      toast(res.msg, !res.ok);
+      if (res.ok){ document.getElementById('pw_old').value = ''; document.getElementById('pw_new').value = ''; document.getElementById('pw_new2').value = ''; }
+    })
+    .withFailureHandler(function(e){ toast(e.message, true); })
+    .changeCode(TOKEN, o, n);
+}
+
+function doRestore(){
+  if (!confirm('ย้อนกลับไปข้อมูลเวอร์ชันก่อนหน้า? การแก้ไขที่ยังไม่บันทึกจะหายไป')) return;
+  google.script.run
+    .withSuccessHandler(function(res){
+      if (res.ok){ PROFILE = res.data; DRAFT = clone(PROFILE); markDirty(false); renderView(); renderEditor(); }
+      toast(res.msg, !res.ok);
+    })
+    .withFailureHandler(function(e){ toast(e.message, true); })
+    .restoreBackup(TOKEN);
+}
+
+function doReset(){
+  if (!confirm('คืนค่าเริ่มต้นทั้งหมด?\nข้อมูลที่แก้ไขไว้จะถูกแทนที่ด้วยค่าตั้งต้นใน Code.gs\n(ยังกด “ย้อนกลับ” ได้ 1 ครั้ง)')) return;
+  google.script.run
+    .withSuccessHandler(function(res){
+      PROFILE = res.data; DRAFT = clone(PROFILE); markDirty(false); renderView(); renderEditor();
+      toast(res.msg);
+    })
+    .withFailureHandler(function(e){ toast(e.message, true); })
+    .resetProfile(TOKEN);
+}
+
+function copyJson(){
+  var ta = document.getElementById('jsonBox');
+  ta.select();
+  try { document.execCommand('copy'); toast('คัดลอกแล้ว'); }
+  catch (e){ toast('คัดลอกไม่สำเร็จ กด Ctrl+C แทน', true); }
+}
+function downloadJson(){
+  try{
+    var blob = new Blob([JSON.stringify(DRAFT, null, 2)], {type:'application/json'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'profile-backup.json';
+    a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 3000);
+  } catch (e){ toast('ดาวน์โหลดไม่ได้ ให้ใช้ปุ่มคัดลอกแทน', true); }
+}
+function importJson(){
+  var raw = document.getElementById('jsonBox').value;
+  var obj;
+  try { obj = JSON.parse(raw); }
+  catch (e){ toast('JSON ไม่ถูกต้อง: ' + e.message, true); return; }
+  if (!obj || !obj.name){ toast('ข้อมูลไม่สมบูรณ์ (ไม่พบฟิลด์ name)', true); return; }
+  if (!confirm('แทนที่ข้อมูลที่กำลังแก้ไขด้วย JSON นี้?')) return;
+  DRAFT = obj;
+  markDirty(true); renderEditor(); renderView();
+  toast('นำเข้าแล้ว — อย่าลืมกดบันทึก');
+}
+
+/* ============================================================
+ *  START
+ * ============================================================ */
+renderView();
+if (AUTO_EDIT) openLogin();
+</script>
+</body>
+</html>
