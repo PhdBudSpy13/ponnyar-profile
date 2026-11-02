@@ -94,7 +94,7 @@
     .hide{display:none !important}
 
     /* ---------- modal / editor ---------- */
-    .mask{position:fixed; inset:0; background:rgba(15,11,5,.55); backdrop-filter:blur(3px); z-index:50; display:flex; align-items:center; justify-content:center; padding:16px}
+    .mask{position:fixed; inset:0; background:rgba(15,11,5,.55); backdrop-filter:blur(3px); z-index:70; display:flex; align-items:center; justify-content:center; padding:16px}
     .modal{background:var(--card); color:var(--ink); border-radius:16px; padding:24px; width:100%; max-width:360px; box-shadow:0 20px 60px rgba(0,0,0,.35)}
     .modal h2{margin:0 0 6px; font-size:19px}
     .modal p.hint{margin:0 0 16px; color:var(--muted); font-size:13px}
@@ -192,7 +192,7 @@
   <div class="modal">
     <h2>เข้าสู่โหมดแก้ไข</h2>
     <p class="hint">กรอกรหัสผ่านเพื่อแก้ไขข้อความ รูปภาพ และธีมสี</p>
-    <input type="password" class="code" id="codeInput" inputmode="numeric" autocomplete="off"
+    <input type="password" class="code" id="codeInput" autocomplete="off"
            maxlength="24" placeholder="••••••" onkeydown="if(event.key==='Enter')doLogin()">
     <p class="err" id="loginErr"></p>
     <div class="row end" style="margin-top:8px">
@@ -566,9 +566,10 @@ var DEFAULT_PROFILE = {
   p.expertise[2].desc.mon = 'ဗ္တောန်ဒဿနဓမ္မ ကီု ယေန်သၞာင်မန် ကီု ပညာပါဠိဇၞော် (သာသနဓဇဓမ္မာစရိယ) ကီုရ။';
 })(DEFAULT_PROFILE);
 
-/* หลังบ้านของหน้า GitHub Pages: ใช้ GitHub API แทน google.script.run
-   ข้อมูลเก็บในไฟล์ data.json ของ repo สาธารณะ ส่วน token เก็บในเบราว์เซอร์ของผู้แก้ไขเท่านั้น */
-var GH = { owner: 'PhdBudSpy13', repo: 'ponnyar-profile', branch: 'main', path: 'data.json', tokenKey: 'gh_edit_token' };
+/* หลังบ้านของหน้า GitHub Pages: ส่งคำสั่งไปที่ Apps Script แทน google.script.run
+   รหัสผ่านและการตรวจสิทธิ์อยู่ฝั่ง Apps Script ทั้งหมด หน้านี้เก็บเฉพาะ token ชั่วคราวของเซสชัน */
+var API_URL = 'https://script.google.com/macros/s/AKfycbytMxzxGvjt4iG1RGqLE-K9AzRJgDlSS1fZdDVyLJmPlrf8MGv2UsIOMS9JAtxxHhQaFg/exec';
+var SESSION_KEY = 'profile_edit_session';
 
 document.documentElement.style.visibility = 'hidden';
 
@@ -588,136 +589,43 @@ function defaultProfile_() {
   return normalizeProfile_(JSON.parse(JSON.stringify(DEFAULT_PROFILE)));
 }
 
-function toBase64_(text) {
-  var bytes = new TextEncoder().encode(text), out = '';
-  for (var i = 0; i < bytes.length; i += 0x8000) {
-    out += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
-  }
-  return btoa(out);
-}
-function fromBase64_(b64) {
-  var bin = atob(String(b64).replace(/\s/g, '')), bytes = new Uint8Array(bin.length);
-  for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-  return new TextDecoder().decode(bytes);
+function rememberSession_(token) {
+  try {
+    if (token) sessionStorage.setItem(SESSION_KEY, token);
+    else sessionStorage.removeItem(SESSION_KEY);
+  } catch (e) {}
 }
 
-function ghApi_(token, path, opts) {
-  opts = opts || {};
-  return fetch('https://api.github.com/repos/' + GH.owner + '/' + GH.repo + path, {
-    method: opts.method || 'GET',
-    cache: 'no-store',
-    headers: {
-      'Authorization': 'Bearer ' + token,
-      'Accept': 'application/vnd.github+json',
-      'Content-Type': 'application/json'
-    },
-    body: opts.body ? JSON.stringify(opts.body) : undefined
+function callApi_(action, args) {
+  return fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },   // เลี่ยง preflight ที่ Apps Script ไม่รองรับ
+    body: JSON.stringify({ action: action, args: args })
   }).then(function (res) {
-    if (res.ok) return res.json();
-    var err = new Error(
-      res.status === 401 ? 'Token ไม่ถูกต้องหรือหมดอายุ กรุณาเข้าสู่โหมดแก้ไขใหม่' :
-      res.status === 403 ? 'Token นี้ไม่มีสิทธิ์เขียน repo นี้' :
-      res.status === 409 ? 'ข้อมูลบน GitHub เพิ่งเปลี่ยน กรุณาลองอีกครั้ง' :
-      'GitHub ตอบกลับผิดพลาด (' + res.status + ')');
-    err.status = res.status;
-    throw err;
+    return res.json();
+  }).then(function (r) {
+    if (!r.ok) {
+      if (/เซสชันหมดอายุ/.test(r.error || '')) { TOKEN = null; rememberSession_(null); }
+      throw new Error(r.error || 'เกิดข้อผิดพลาด');
+    }
+    return r.result;
   });
 }
-function currentSha_(token) {
-  return ghApi_(token, '/contents/' + GH.path + '?ref=' + GH.branch).then(function (f) {
-    return f.sha;
-  }, function (e) {
-    if (e.status === 404) return undefined;   // ยังไม่เคยบันทึก
-    throw e;
-  });
-}
-function writeData_(token, obj, message) {
-  var body = function (sha) {
-    var b = { message: message, branch: GH.branch, content: toBase64_(JSON.stringify(obj, null, 2)) };
-    if (sha) b.sha = sha;
-    return { method: 'PUT', body: b };
-  };
-  var put = function () {
-    return currentSha_(token).then(function (sha) {
-      return ghApi_(token, '/contents/' + GH.path, body(sha));
-    });
-  };
-  return put().catch(function (e) {
-    if (e.status === 409) return put();
-    throw e;
-  });
-}
-
-var GH_SERVER = {
-  login: function (code) {
-    var token = String(code == null ? '' : code).trim();
-    if (!token) return { ok: false, msg: 'กรุณาวาง GitHub token' };
-    return ghApi_(token, '').then(function (r) {
-      if (!r.permissions || !r.permissions.push) return { ok: false, msg: 'Token นี้ไม่มีสิทธิ์เขียน repo นี้' };
-      try { localStorage.setItem(GH.tokenKey, token); } catch (e) {}
-      return { ok: true, token: token };
-    }, function (e) {
-      return { ok: false, msg: e.message };
-    });
-  },
-  logout: function () {
-    try { localStorage.removeItem(GH.tokenKey); } catch (e) {}
-    return true;
-  },
-  saveProfile: function (token, json) {
-    var obj = JSON.parse(json);
-    if (!obj || typeof obj !== 'object' || !obj.name) throw new Error('ข้อมูลไม่สมบูรณ์ (ไม่พบฟิลด์ name)');
-    obj.updatedAt = new Date().toISOString();
-    return writeData_(token, obj, 'Update profile data').then(function () {
-      return { ok: true, msg: 'บันทึกแล้ว เว็บจะอัปเดตภายใน ๑–๒ นาที', data: normalizeProfile_(obj) };
-    });
-  },
-  restoreBackup: function (token) {
-    return ghApi_(token, '/commits?path=' + GH.path + '&sha=' + GH.branch + '&per_page=2').then(function (list) {
-      if (list.length < 2) return { ok: false, msg: 'ไม่มีข้อมูลสำรอง' };
-      return ghApi_(token, '/contents/' + GH.path + '?ref=' + list[1].sha).then(function (f) {
-        var obj = JSON.parse(fromBase64_(f.content));
-        return writeData_(token, obj, 'Restore previous profile data').then(function () {
-          return { ok: true, msg: 'ย้อนกลับเวอร์ชันก่อนหน้าแล้ว', data: normalizeProfile_(obj) };
-        });
-      });
-    });
-  },
-  resetProfile: function (token) {
-    var obj = defaultProfile_();
-    return writeData_(token, obj, 'Reset profile data to defaults').then(function () {
-      return { ok: true, msg: 'คืนค่าเริ่มต้นแล้ว', data: obj };
-    });
-  },
-  changeCode: function () {
-    return { ok: false, msg: 'หน้านี้ใช้ GitHub token แทนรหัสผ่าน' };
-  },
-  uploadImage: function (token, dataUrl, filename) {
-    var m = String(dataUrl || '').match(/^data:(image\/[^;]+);base64,(.+)$/);
-    if (!m) throw new Error('รองรับเฉพาะไฟล์รูปภาพ');
-    var safe = String(filename || 'image').replace(/[^A-Za-z0-9._-]/g, '_');
-    var path = 'images/' + Date.now() + '-' + safe;
-    return ghApi_(token, '/contents/' + path, {
-      method: 'PUT',
-      body: { message: 'Add image ' + safe, branch: GH.branch, content: m[2] }
-    }).then(function () {
-      return { ok: true, url: 'https://raw.githubusercontent.com/' + GH.owner + '/' + GH.repo + '/' + GH.branch + '/' + path };
-    });
-  }
-};
 
 var google = { script: { run: (function () {
+  var ACTIONS = ['login','logout','changeCode','saveProfile','restoreBackup','resetProfile','uploadImage'];
   function make(ok, fail) {
     var api = {
       withSuccessHandler: function (f) { return make(f, fail); },
       withFailureHandler: function (f) { return make(ok, f); }
     };
-    Object.keys(GH_SERVER).forEach(function (name) {
+    ACTIONS.forEach(function (name) {
       api[name] = function () {
-        var args = arguments;
-        Promise.resolve().then(function () {
-          return GH_SERVER[name].apply(null, args);
-        }).then(function (r) {
+        var args = Array.prototype.slice.call(arguments);
+        if (name === 'logout') rememberSession_(null);
+        callApi_(name, args).then(function (r) {
+          if (name === 'login' && r && r.ok) rememberSession_(r.token);
+          if (r && r.data) r.data = normalizeProfile_(r.data);
           if (ok) ok(r);
         }, function (e) {
           if (fail) fail(e);
@@ -1523,46 +1431,26 @@ renderView();
 if (AUTO_EDIT) openLogin();
 </script>
 <script>
-/* ปรับหน้าจอแก้ไขให้ใช้ GitHub token และโหลดข้อมูลล่าสุดจาก data.json */
+/* โหลดข้อมูลล่าสุดจาก Apps Script ถ้าโหลดไม่ได้จะแสดงค่าตั้งต้นที่ฝังในหน้า */
 (function () {
-  try { TOKEN = localStorage.getItem(GH.tokenKey) || null; } catch (e) {}
-
-  var input = document.getElementById('codeInput');
-  input.className = '';
-  input.removeAttribute('maxlength');
-  input.removeAttribute('inputmode');
-  input.placeholder = 'github_pat_...';
-  document.querySelector('#loginMask .hint').innerHTML =
-    'วาง GitHub token ของบัญชีเจ้าของ repo เบราว์เซอร์นี้จะจำไว้จนกว่าจะออกจากโหมดแก้ไข ' +
-    '<a href="https://github.com/settings/personal-access-tokens/new?name=ponnyar-profile-editor&target_name=' + GH.owner +
-    '&contents=write" target="_blank" rel="noopener">สร้าง token</a>';
-
-  SECTIONS.forEach(function (s) { if (s.k === 'settings') s.n = 'ตั้งค่า'; });
-
-  var originalSettings = renderSettingsSection;
-  renderSettingsSection = function () {
-    return originalSettings()
-      .replace('<p class="desc">รหัสผ่าน สำรองข้อมูล และนำเข้า/ส่งออก</p>', '<p class="desc">สำรองข้อมูล และนำเข้า/ส่งออก</p>')
-      .replace(/<div class="item"><div class="item-head"><span>เปลี่ยนรหัสผ่าน[\s\S]*?เปลี่ยนรหัส<\/button><\/div>/,
-        '<div class="note">หน้านี้ใช้ GitHub token แทนรหัสผ่าน ถ้า token รั่วหรือหมดอายุ ให้ลบที่ GitHub แล้วสร้างใหม่</div>');
-  };
+  try {
+    localStorage.removeItem('gh_edit_token');   // token ของระบบเดิม
+    TOKEN = sessionStorage.getItem(SESSION_KEY) || null;
+  } catch (e) {}
 
   function show() { document.documentElement.style.visibility = ''; }
-  setTimeout(show, 2500);
+  setTimeout(show, 3000);
 
-  fetch(GH.path + '?t=' + Date.now(), { cache: 'no-store' }).then(function (res) {
-    return res.ok ? res.json() : null;
+  fetch(API_URL + '?format=json').then(function (res) {
+    return res.json();
   }).then(function (data) {
-    if (data && !DRAFT) {
+    if (data && data.name && !DRAFT) {
       PROFILE = normalizeProfile_(data);
       renderView();
     }
   }).catch(function () {
-    // ไม่มี data.json หรือโหลดไม่ได้: ใช้ค่าตั้งต้นที่ฝังในหน้า
-  }).then(function () {
     renderView();
-    show();
-  });
+  }).then(show);
 })();
 
 </script>
