@@ -669,6 +669,7 @@ function urlOf(raw){
   var s = String(raw || '').trim();
   var m = s.match(/\((https?:\/\/[^)]+)\)/);
   if (m) return m[1];
+  if (/^www\./i.test(s)) return 'https://' + s;
   return /^https?:\/\//i.test(s) ? s : '';
 }
 function getP(obj, path){
@@ -716,6 +717,7 @@ var UI = {
   colVenue:   { th:'สถานที่', en:'Venue', mon:'ဌာန' },
   colType:    { th:'ประเภท',  en:'Type',  mon:'ဂကူ' },
   read:       { th:'อ่านบทความ →', en:'Read paper →', mon:'ဗှ်လိက် →' },
+  more:       { th:'ดูเพิ่มเติม →', en:'View more →', mon:'ကွာ် →' },
   empty:      { th:'— ยังไม่มีข้อมูล —', en:'— No data yet —', mon:'— ဟွံမဲကဵုဒေတာ —' },
   other:      { th:'ผลงานอื่น ๆ', en:'Other Works', mon:'ကမၠောန်တၞဟ်' }
 };
@@ -842,16 +844,21 @@ function renderAbout(P){
     '<div class="sectitle">' + esc(u('contact'))   + '</div>' + contact;
 }
 
-function renderWork(P){
-  var items = (P.experience || []).map(function(w){
-    return '<div class="card"><h3>' + esc(t(w.title)) + '</h3>' +
-      '<p class="sub">' + esc(t(w.sub)) + '</p><p>' + esc(t(w.desc)) + '</p></div>';
-  }).join('') || emptyCard();
+/* การ์ดประสบการณ์/ผลงานอื่น ๆ: กดรูปเพื่อดูรูปเต็ม และแสดงลิงก์เมื่อมี */
+function workCard(w){
+  var link = urlOf(w.url), img = urlOf(w.image), sub = t(w.sub), desc = t(w.desc);
+  return '<div class="card paper">' +
+    (img ? '<div class="thumb"><a href="' + esc(img) + '" target="_blank" rel="noopener"><img src="' + esc(img) + '" alt="" loading="lazy" onerror="this.closest(\'.thumb\').style.display=\'none\'"></a></div>' : '') +
+    '<div class="body"><h3>' + esc(t(w.title)) + '</h3>' +
+    (sub ? '<p class="sub">' + esc(sub) + '</p>' : '') +
+    (desc ? '<p>' + esc(desc) + '</p>' : '') +
+    (link ? '<a class="link" href="' + esc(link) + '" target="_blank" rel="noopener">' + esc(u('more')) + '</a>' : '') +
+    '</div></div>';
+}
 
-  var other = (P.otherWorks || []).map(function(w){
-    return '<div class="card"><h3>' + esc(t(w.title)) + '</h3>' +
-      (w.desc ? '<p>' + esc(t(w.desc)) + '</p>' : '') + '</div>';
-  }).join('');
+function renderWork(P){
+  var items = (P.experience || []).map(workCard).join('') || emptyCard();
+  var other = (P.otherWorks || []).map(workCard).join('');
 
   document.getElementById('panel-work').innerHTML =
     '<div class="sectitle">' + esc(u('experience')) + '</div><div class="grid two">' + items + '</div>' +
@@ -975,8 +982,9 @@ var LISTS = {
   experience: {
     title:'ประสบการณ์ทำงาน', desc:'',
     label:function(o){ return t(o.title) || 'รายการใหม่'; },
-    fields:[ {p:'title',t:'bi',l:'ตำแหน่ง'}, {p:'sub',t:'bi',l:'หน่วยงาน',area:true}, {p:'desc',t:'bi',l:'รายละเอียดงาน',area:true} ],
-    blank:function(){ return { title:{th:'',en:''}, sub:{th:'',en:''}, desc:{th:'',en:''} }; }
+    fields:[ {p:'title',t:'bi',l:'ตำแหน่ง'}, {p:'sub',t:'bi',l:'หน่วยงาน',area:true}, {p:'desc',t:'bi',l:'รายละเอียดงาน',area:true},
+             {p:'url',t:'text',l:'ลิงก์ (ไม่มีก็เว้นว่าง)'}, {p:'image',t:'img',l:'รูปภาพ'} ],
+    blank:function(){ return { title:{th:'',en:''}, sub:{th:'',en:''}, desc:{th:'',en:''}, url:'', image:'' }; }
   },
   expertise: {
     title:'ความเชี่ยวชาญ', desc:'',
@@ -1002,8 +1010,9 @@ var LISTS = {
   otherWorks: {
     title:'ผลงานอื่น ๆ', desc:'',
     label:function(o){ return t(o.title) || 'รายการใหม่'; },
-    fields:[ {p:'title',t:'bi',l:'ชื่อผลงาน'}, {p:'desc',t:'bi',l:'รายละเอียด',area:true} ],
-    blank:function(){ return { title:{th:'',en:''}, desc:{th:'',en:''} }; }
+    fields:[ {p:'title',t:'bi',l:'ชื่อผลงาน'}, {p:'desc',t:'bi',l:'รายละเอียด',area:true},
+             {p:'url',t:'text',l:'ลิงก์ (ไม่มีก็เว้นว่าง)'}, {p:'image',t:'img',l:'รูปภาพ'} ],
+    blank:function(){ return { title:{th:'',en:''}, desc:{th:'',en:''}, url:'', image:'' }; }
   }
 };
 
